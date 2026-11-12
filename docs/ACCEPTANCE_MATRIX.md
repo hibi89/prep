@@ -1,3 +1,10 @@
+## 2026-11-12 KST — P85 partial implementation evidence (supersedes prior snapshot for new code)
+- R08 **partial implementation**: HTML static report with escape/CSP and bounded 200-row preview added, 6/6 local module tests at exact Git blob hash PASS. New CLI HTML E2E **NOT_RUN**; HTML not complete signed/authoritative evidence.
+- R01/R12 **partial**: `./sdk` preview package export exists, no published package/consumer acceptance, contract not stable; R12 **NOT_RUN**.
+- R11 **partial**: Manual GitHub workflow defined, no dispatch/CI PASS, full updated 61 baseline + 8 new tests **NOT_RUN** as a combined repo.
+- P70 baseline upstream differences and source-rights goldens remain unresolved. Therefore neither 70 nor 85 is certified; commercial release HOLD.
+- Git HEAD functional commit `29316f13818765d374aeefdd29e4420b680e3014`. Source/report blob `84daeeea1af5d3667d112df87d6f755aefdad2a9`, report-test blob `2f55aaa4d1e466b789d0b3d4507b9a5c5dec7720`.
+---
 ## 2026-11-12 — Post-comparison P70 evidence update (supersedes 59 test checkpoint)
 - Linux Node22 native **61/61 PASS / 0 FAIL / 0 SKIP**, clean ZIP **61/61 PASS**; syntax/pack smoke PASS.
 - Confirmed exact source/test Git blobs: `a9285b06c08a2483565c48eb19ebaca175ae405a` and `a8831717eb90e1e2f9ce57e663c3f0e6181272c1`.

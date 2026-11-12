@@ -71,3 +71,9 @@ Feature branches merge via review and checks; no force-push or unauthorized publ
 **No secret, credential, personal/customer data, private source, paid service, third-party transfer, branch history rewrite, production deployment, or security/visibility change without appropriate authorization.** Product completion is evidence-based, not estimated from docs. See [SECURITY.md](SECURITY.md) and [docs/ROADMAP.md](docs/ROADMAP.md).
 
 Copyright and distribution rights are **not granted** by this README. No open-source license has been selected.
+
+
+## P85 candidate: review output and preview SDK (2026-11-12 KST)
+- `node bin/prep.mjs run --input examples/synthetic.csv --config examples/schema.json --output preview.html` writes a new *static sanitized preview*, without overwriting existing files. Maximum 200 rows/issues shown; use JSON for complete receipt and output.
+- Internal pre-release SDK entry: `@private/prep-engine/sdk`; see `docs/SDK_CONTRACT.md`. Not published or drop-in SMAX compatible.
+- `.github/workflows/prep-candidate.yml` is **manual-only** and has not run. The feature branch is not certified for 85% or commercial release.

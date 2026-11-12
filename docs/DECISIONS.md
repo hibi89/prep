@@ -1,3 +1,8 @@
+## D10 — P85 report/SDK versus direct SMAX coupling (2026-11-12 KST)
+- Option A: import or copy SMAX data/formatter, potentially faster feature reuse but differing date/decimal/boolean contracts and rights, high dependency/regression risk; no budget advantage for offline local deterministic work.
+- Option B: retain PREP clean-room core and add narrow HTML reporter plus preview SDK facade, zero paid calls and minimal coupling; slightly more test/contract work but maintainable independent versioning.
+- **Chosen B**. Source is private, reports static/CSP-locked and bounded. A no-auto-spend manually triggered CI YAML is committed, *not executed*. No published SDK or approval authority implied. Preserve prior cross-contract golden parity gate.
+---
 ## D09 — Raw-row exact duplicate semantics (2026-11-12)
 - Option A: hash mapped normalized values (fast, insufficient; distinct raw source rows with different unmapped columns collide). Rejected after read-only SMAX comparison.
 - Option B: compare the complete raw source row in stable source-column order (same bounded-memory cost for at most 2MiB/20k rows; matches raw exact-duplicate definition). Implemented with two new tests; Node22 Linux 61/61 PASS; exact Git code/test blob SHAs in STATUS.
