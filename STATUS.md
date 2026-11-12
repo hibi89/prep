@@ -1,3 +1,15 @@
+## 2026-11-12 KST — P70 engineering candidate (current; supersedes documentation-only status below)
+
+- **Implementation exists in PRIVATE GitHub** on `feature/core-extraction`; no upstream SMAX code copied and the upstream repository/consumers are unchanged. The six files `src/index.mjs`, `bin/prep.mjs`, `package.json`, `test/prep.test.mjs`, `examples/schema.json`, `examples/synthetic.csv` were individually fetched and Git blob SHA-matched against the exact local tested source.
+- **Native Linux Node v22.16.0**: `npm test` **59 PASS / 0 FAIL / 0 SKIP**, `npm run check` PASS, `npm pack --dry-run --json` PASS. Fresh synthetic ZIP extraction repeated **59/59 PASS**. Deterministic bounded 20,000-row / 277,783-byte synthetic CSV test returned 20,000 rows, REVIEW 0 and about 68ms on this environment (not a general performance guarantee).
+- Scope implemented: strict bounded CSV+JSON reader, explicit schema/column mapping with non-applied suggestions, date/integer/decimal/bool/text normalization, missing/duplicate/formula/control/unmapped review reasons, SHA source receipt/verification, no-overwrite atomic new JSON/CSV result, CLI inspect/run/verify with status/exit codes 0/1/2. No network or paid dependency.
+- **70% target: functional candidate only, NOT CERTIFIED**. The original SMAX PREP behavioral golden parity, source-rights/migration baseline, native GitHub CI, Windows, and external consumer verification remain NOT_RUN. Under REQUIREMENTS/ACCEPTANCE_MATRIX the canonical final-product completion cannot be upgraded to 70% without prerequisite proof. Release HOLD.
+- Exact verified Git blob SHA: core `ca35fba85d7045042f701d54954aeea04a901ca9`; tests `96ba90427bd3f78ae8d8a7d2156fa82115f90335`; CLI `0742630a839a6244006fadc4a5d4c82fe38c6a91`; package `cda102ea7ed54032d0c67ea20325b83779dfb1dc`; samples `0521a9b81181b5127d11af232d1c8c37ff30b46f`, `54a2b2c5a0596e3ae14bbd41bbb2fb667676933d`.
+- Recovery: restore pre-implementation branch SHA `15e21dbe1ccac516dff93967c538b7645e756a3f`; do not rewrite history or touch SMAX. Latest implementation commit before this documentation update: `75a4e27257ddfc56014e4772eb54b4e8bdc59084`.
+- Remaining limitations: CSV-only export does not package a standalone receipt, receipt hash is not an authenticity signature, non-integer JSON numbers are refused to avoid precision ambiguity, HTML report and consumer adapter not yet implemented.
+
+---
+
 # PREP — STATUS
 Checked: 2026-11-12 KST. Verification scope: connected GitHub repository metadata, documented source review, and repository documentation writes.
 
