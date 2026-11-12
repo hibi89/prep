@@ -58,6 +58,42 @@ export function parseCSV(value) {
   return { format: 'csv', columns, records: data };
 }
 
+/** Reject duplicate object keys before JSON.parse can silently discard values.
+ * Every v1 input record is a flat object. Track string-token and root-record depth;
+ * escaped Unicode spellings of the same key resolve to the same property name.
+ * JSON.parse still owns full syntax and unsupported nested-value validation.
+ */
+function rejectDuplicateJSONKeys(value) {
+  const root = value.replace(/^\uFEFF/, '');
+  let depth = 0, quoted = false, escaping = false, start = 0;
+  let keys = null, expectKey = false;
+  for (let i = 0; i < root.length; i++) {
+    const c = root[i];
+    if (quoted) {
+      if (escaping) { escaping = false; continue; }
+      if (c === '\\') { escaping = true; continue; }
+      if (c === '"') {
+        quoted = false;
+        if (depth === 2 && expectKey) {
+          const key = JSON.parse(root.slice(start, i + 1));
+          if (keys.has(key)) fail('DUPLICATE_JSON_KEY');
+          keys.add(key);
+          expectKey = false;
+        }
+      }
+      continue;
+    }
+    if (c === '"') { quoted = true; start = i; continue; }
+    if (c === '[' || c === '{') {
+      depth++;
+      if (c === '{' && depth === 2) { keys = new Set(); expectKey = true; }
+    } else if (c === ']' || c === '}') {
+      if (c === '}' && depth === 2) { keys = null; expectKey = false; }
+      depth--;
+    } else if (c === ',' && depth === 2) expectKey = true;
+  }
+}
+
 export function parseJSON(value) {
   if (typeof value !== 'string') fail('INVALID_JSON');
   if (Buffer.byteLength(value, 'utf8') > LIMITS.inputBytes) fail('INPUT_LIMIT');
@@ -65,6 +101,7 @@ export function parseJSON(value) {
   try { body = JSON.parse(value.replace(/^\uFEFF/, '')); } catch { fail('MALFORMED_JSON'); }
   if (!Array.isArray(body) || body.length === 0) fail('INVALID_JSON_ROOT');
   if (body.length > LIMITS.rows) fail('ROW_LIMIT');
+  rejectDuplicateJSONKeys(value);
   const columns = [];
   const records = body.map((entry, i) => {
     if (!checkPlain(entry)) fail('INVALID_JSON_RECORD');
@@ -82,7 +119,7 @@ export function parseJSON(value) {
 export function validateConfig(config) {
   if (!checkPlain(config) || config.schema_version !== 1 || !Array.isArray(config.fields) || config.fields.length < 1 || config.fields.length > LIMITS.columns) fail('INVALID_SCHEMA');
   const fields = config.fields.map(f => {
-    if (!checkPlain(f) || Object.keys(f).some(k => !['name','source','type','required'].includes(k)) || typeof f.name !== 'string' || !f.name.trim() || !noControl(f.name) || !allowedTypes.has(f.type) || typeof f.source !== 'string' || !f.source.trim() || !noControl(f.source) || (f.required !== undefined && typeof f.required !== 'boolean')) fail('INVALID_SCHEMA_FIELD');
+    if (!checkPlain(f) || Object.keys(f).some(k => !['name','source','type','required'].includes(k)) || typeof f.name !== 'string' || !f.name.trim() || !noControl(f.name) || ['__source_record','__status','__reasons'].includes(f.name.normalize('NFKC').toLowerCase()) || !allowedTypes.has(f.type) || typeof f.source !== 'string' || !f.source.trim() || !noControl(f.source) || (f.required !== undefined && typeof f.required !== 'boolean')) fail('INVALID_SCHEMA_FIELD');
     return { name: f.name, source: f.source, type: f.type, required: f.required === true };
   });
   if (new Set(fields.map(x => x.name)).size !== fields.length || new Set(fields.map(x => x.source)).size !== fields.length) fail('DUPLICATE_MAPPING');
