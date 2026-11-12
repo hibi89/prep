@@ -1,0 +1,31 @@
+# PREP — AGENTS / Operating Rules
+Updated: 2026-11-12 KST. Applies to all branches and AI collaborators.
+
+## Authority and startup
+- PREP has one technical lead responsible for design, code, testing, and verification.
+- Read in order: HANDOFF.md → STATUS.md → AGENTS.md → REQUIREMENTS.md → docs/ARCHITECTURE.md → docs/MIGRATION_PLAN.md → relevant source/tests.
+- The default branch is the source of reviewed specifications; actual code and exact Git commits override stale documents where verified.
+- A user message "ㄱ" means continue the next approved and safe unit of work; it does not override privacy, cost, permissions, or release gates.
+
+## Hard controls
+1. Never copy source from a private repository into a public one. This repository is presently PUBLIC. Keep all content in this repository public-safe until visibility and distribution rights are explicitly resolved.
+2. Never commit secrets, .env files, private documents, customer data, tokens, credentials, model weights or licensed third-party datasets. Do not log raw rows or sensitive paths by default.
+3. Do not change source repository content, Git history, GitHub privacy, branch protection, integrations, secrets, costs, domains or production deployment without explicit authorization.
+4. Adopt an independent, local-first, deterministic core. No mandatory LLM, cloud upload, internet requirement, credential passthrough, automatic approval or destructive writes.
+5. Compare at least two designs for major choices, including cost, performance and maintainability; record the decision in docs/DECISIONS.md.
+6. Preserve working behavior and source lineage. Before migration, record source SHA and file inventory **privately**, obtain ownership/license clearance, then extract only reusable modules and golden tests.
+7. All file inputs are untrusted. Apply type, encoding, size, path, symlink, formula-injection, unsafe content and denial-of-service checks before parsing/export.
+8. Keep deterministic processing and recommendations separate from approval and execution. REVIEW/HOLD never silently becomes approved.
+9. Tests must show exact command, PASS/FAIL/SKIP, environment and code SHA. Local/isolated/mocked success is not whole-product or production success.
+10. Do not assert PREP's independent completion percent from another product's 50% status. Score it against REQUIREMENTS.md only after evidence review.
+11. Recovery: save pre-change SHA and rollback steps. After one failed approach, diagnose and attempt one materially improved method; after two non-progressing failures, stop and pivot.
+12. Before session completion, update STATUS.md and the ten-part HANDOFF.md for material changes. Cite repo/branch/SHA and clarify any blocked or unverified work.
+
+## Git and release
+- main: protected-in-practice reviewed baseline; develop: integration; feature/core-extraction: initial technical work.
+- No force push, empty commits, opportunistic new projects, auto-deployment, or CI cost changes.
+- Check authenticated GitHub identity and commit attribution; commits must be traceable to the connected account.
+- Release only after verified CLI/SDK, security, Windows/Linux and downstream integration tests, and explicit owner approval.
+
+## Scope boundaries
+PREP owns reusable preprocessing contracts and quality. Consumers own their workflow/UI/business adapters. The upstream private project remains unmodified. Do not copy or publish private source while this repository is public.

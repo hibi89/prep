@@ -1,0 +1,38 @@
+# Credentials and local secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.token
+
+# Local/customer data, model/cache artifacts, personal exports
+data/
+private/
+secrets/
+samples/private/
+out/
+output/
+tmp/
+.cache/
+*.db
+*.sqlite
+*.sqlite3
+*.xlsx
+*.xls
+*.csv
+*.parquet
+*.pdf
+*.docx
+!tests/fixtures/synthetic/*.csv
+
+# Runtime/build artifacts
+node_modules/
+dist/
+build/
+coverage/
+*.log
+.DS_Store
+Thumbs.db
