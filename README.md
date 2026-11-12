@@ -1,3 +1,5 @@
+> **2026-11-12 latest PREP P70 candidate hardening:** local Node22 Linux tests **61/61 PASS** (plus clean ZIP fresh extraction 61/61), exact Git code/test blob match; raw-row duplicate correction and two regression tests committed to PRIVATE `feature/core-extraction`. Upstream SMAX schema and numeric/date/boolean conversion differ; full parity and formal 70%-gate remain **NOT CERTIFIED**, canonical completion **UNASSESSED**. No production, upstream edits or main/develop promotion.
+>
 > **2026-11-12 P70 development update:** Independently authored PREP runtime, test suite and CLI are now committed to the PRIVATE `feature/core-extraction` branch. Tested local exact Git blobs on Linux Node22.16.0: **59/59 PASS**, plus fresh ZIP extraction 59/59, package dry-run and synthetic 20k-row benchmark. **70% functional candidate, NOT certified milestone:** SMAX behavioral parity, original-source rights/migration, CI, Windows and consumer acceptance remain open. `main` and `develop` are unchanged; no production deployment.
 >
 > Development commands on feature branch:
