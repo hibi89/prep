@@ -25,6 +25,7 @@ const formulaRisk = raw => {
 
 export function parseCSV(value) {
   if (typeof value !== 'string') fail('INVALID_CSV');
+  if (Buffer.byteLength(value, 'utf8') > LIMITS.inputBytes) fail('INPUT_LIMIT');
   const text = value.replace(/^\uFEFF/, '');
   const rows = []; let row = [], cell = '', quoted = false, closed = false, line = 1, startLine = 1;
   const add = () => { if (row.length >= LIMITS.columns) fail('COLUMN_LIMIT'); row.push(cell); cell = ''; closed = false; };
@@ -33,7 +34,7 @@ export function parseCSV(value) {
     const c = text[i];
     if (quoted) {
       if (c === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else { quoted = false; closed = true; } }
-      else { cell += c; if (c === '\n') line++; }
+      else { cell += c; if (c === '\r' || c === '\n' && text[i - 1] !== '\r') line++; }
       continue;
     }
     if (closed && c !== ',' && c !== '\n' && c !== '\r') fail('MALFORMED_CSV');
@@ -58,6 +59,8 @@ export function parseCSV(value) {
 }
 
 export function parseJSON(value) {
+  if (typeof value !== 'string') fail('INVALID_JSON');
+  if (Buffer.byteLength(value, 'utf8') > LIMITS.inputBytes) fail('INPUT_LIMIT');
   let body;
   try { body = JSON.parse(value.replace(/^\uFEFF/, '')); } catch { fail('MALFORMED_JSON'); }
   if (!Array.isArray(body) || body.length === 0) fail('INVALID_JSON_ROOT');
@@ -79,7 +82,7 @@ export function parseJSON(value) {
 export function validateConfig(config) {
   if (!checkPlain(config) || config.schema_version !== 1 || !Array.isArray(config.fields) || config.fields.length < 1 || config.fields.length > LIMITS.columns) fail('INVALID_SCHEMA');
   const fields = config.fields.map(f => {
-    if (!checkPlain(f) || typeof f.name !== 'string' || !f.name.trim() || !noControl(f.name) || !allowedTypes.has(f.type) || typeof f.source !== 'string' || !f.source.trim() || !noControl(f.source) || (f.required !== undefined && typeof f.required !== 'boolean')) fail('INVALID_SCHEMA_FIELD');
+    if (!checkPlain(f) || Object.keys(f).some(k => !['name','source','type','required'].includes(k)) || typeof f.name !== 'string' || !f.name.trim() || !noControl(f.name) || !allowedTypes.has(f.type) || typeof f.source !== 'string' || !f.source.trim() || !noControl(f.source) || (f.required !== undefined && typeof f.required !== 'boolean')) fail('INVALID_SCHEMA_FIELD');
     return { name: f.name, source: f.source, type: f.type, required: f.required === true };
   });
   if (new Set(fields.map(x => x.name)).size !== fields.length || new Set(fields.map(x => x.source)).size !== fields.length) fail('DUPLICATE_MAPPING');
@@ -138,6 +141,7 @@ export function prepareDataset(bytes, format, config) {
   const schema = validateConfig(config);
   const parsed = format === 'csv' ? parseCSV(utf8(bytes)) : format === 'json' ? parseJSON(utf8(bytes)) : fail('UNSUPPORTED_FORMAT');
   for (const f of schema.fields) if (!parsed.columns.includes(f.source)) fail('MISSING_MAPPED_COLUMN');
+  if (parsed.records.length === 0) fail('EMPTY_SOURCE_ROWS');
   const review_queue = [], records = [], duplicates = new Set();
   const mapped = new Set(schema.fields.map(f => f.source));
   const extra = parsed.columns.filter(c => !mapped.has(c));
@@ -167,8 +171,13 @@ export function prepareDataset(bytes, format, config) {
     else duplicates.add(key);
     records.push({ source_record: i + 1, source_line: source.line, status: reasons.length ? 'REVIEW_REQUIRED' : 'OK_FOR_OWNER_REVIEW', reasons: [...new Set(reasons)], data: normalized });
   }
+  // Alias collisions can exist even when all mapped source columns are explicit.
+  // Never silently turn an ambiguous recommendation into whole-dataset READY.
+  const mapping_suggestions = suggestMappings(parsed.columns, schema);
+  const ambiguous = mapping_suggestions.filter(m => m.candidates.length > 1);
+  for (const mapping of ambiguous) review_queue.push({record:null, source_line:null, code:'AMBIGUOUS_MAPPING', field:mapping.field});
   const receipt = { schema_version: 1, transform_version: VERSION, source_sha256: digest(bytes), config_sha256: digest(JSON.stringify(schema)), source_format: format, input_rows: records.length, output_rows: records.length, review_rows: records.filter(x => x.status === 'REVIEW_REQUIRED').length, approval: 'NOT_GRANTED', execution: 'NOT_PERFORMED' };
-  const result = { status: receipt.review_rows ? 'REVIEW_REQUIRED' : 'OK_FOR_OWNER_REVIEW', receipt, review_queue, mapping_suggestions: suggestMappings(parsed.columns, schema), records };
+  const result = { status: receipt.review_rows || ambiguous.length ? 'REVIEW_REQUIRED' : 'OK_FOR_OWNER_REVIEW', receipt, review_queue, mapping_suggestions, records };
   // The source checksum alone cannot detect a post-export change to normalized rows.
   receipt.result_sha256 = digest(JSON.stringify({ status: result.status, records, review_queue, mapping_suggestions: result.mapping_suggestions }));
   receipt.receipt_sha256 = digest(JSON.stringify(receipt));
