@@ -1,0 +1,3 @@
+Date,Amount,Approved,Note
+2026/11/12,001.2500,yes,alpha
+2026-11-13,-2.50,no,=cmd
