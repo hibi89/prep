@@ -1,3 +1,8 @@
+## D09 — Raw-row exact duplicate semantics (2026-11-12)
+- Option A: hash mapped normalized values (fast, insufficient; distinct raw source rows with different unmapped columns collide). Rejected after read-only SMAX comparison.
+- Option B: compare the complete raw source row in stable source-column order (same bounded-memory cost for at most 2MiB/20k rows; matches raw exact-duplicate definition). Implemented with two new tests; Node22 Linux 61/61 PASS; exact Git code/test blob SHAs in STATUS.
+- Cross-implementation date/decimal/boolean/evidence differences are not silently reconciled; require explicit versioned compatibility decisions and upstream golden parity before certification.
+
 ## D07 — Bounded deterministic parser vs unapproved streaming engine (2026-11-12)
 - A: stream every input, more complexity, harder reasoning about line and receipt consistency, potentially scales further.
 - B: fail closed above 2 MiB / 20,000 rows / 64 columns, parse in-memory, no third-party deps, easier testability; per-file memory bounded by explicit input and parsed objects.
