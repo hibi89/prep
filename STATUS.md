@@ -1,3 +1,11 @@
+## 2026-11-12 KST — P85 게이트 재검수 및 개발 정체 원인 확정 (LATEST)
+- **실제 기능/로컬 Linux:** 독립 PREP의 85% 단계 주요 요구 R01–R10 LOCAL PASS, R11 Linux 150/150 PASS + 실제 GitHub-hosted CI NOT_RUN. 동일 파일 재실행 npm test 150 PASS, npm run check PASS, npm pack dry-run PASS. 20,000 synthetic rows 단회 측정: 148,893 bytes, 0.18s wall, max RSS 65,604 KiB (성능 SLA 아님).
+- 기능 코드 SHA **a4c71258851af4b0d8540202f36c84c1438ad9e6**, 문서 검수 직전 HEAD 41ce61909887fec1dfdf1a3bba0293f566024cd2. 로컬 주요 Git blob SHA와 GitHub 파일 일치 확인. 이전 오프라인 독립 패키지 및 네트워크 격리 150 PASS 기록 유지. 새 기능 수정 없음.
+- **진척 지연 원인:** 독립 개발 85%의 Linux 기능/검증과 후속 95% Windows/소비자 전환, 외부 SMAX drop-in 원본 동등성, 실제 hosted CI의 인증을 혼동하여 불필요하게 테스트 수만 계속 늘렸다. 기준 변경 없음; `docs/P85_GATE_AUDIT_20261112.md`에 R01–R12 수용/보류 근거·2안 비교·개입 필요사항 고정.
+- **정직한 상태:** 85% 기능 범위 주요 항목은 로컬 검증 완료. **공식 85% 수용은 hosted CI/원본 비교 정책 승인 미해결로 보류**, 최종완성률 수치 재산정 없음. SMAX/소비자 원본 미변경, RELEASE HOLD, 비용·설정·배포 변경 없음. 반복적 테스트 추가 대신 원본 비교 승인/CI 승인 2개 관문으로 집중한다.
+
+---
+
 ## 2026-11-12 KST — PREP P85 HTML row-status HOLD consistency (LATEST)
 - **Exact code commit:** PRIVATE hibi89/prep@feature/core-extraction **a4c71258851af4b0d8540202f36c84c1438ad9e6**, prior rollback/docs SHA 99e0fa5e664b7a260c7be0b37ef35ed606dc00af. Modified src/report.mjs, test/global-hold-export.test.mjs and test/prep-native-golden.test.mjs, exact local Git blob SHA matched GitHub: fd9f30cba76dbe1055c882f058aaf73be7d8f7c1, 15c3641bf3605d86acd4e743cd51261e35c808f1, bc2ce14b3ea048bca88f0d4e00e3fa132b152c23. PREP main/develop and original SMAX unchanged.
 - **Issue fixed:** Previous static HTML preview had prominent DATASET REVIEW REQUIRED notice but displayed each row's underlying OK_FOR_OWNER_REVIEW (unlike CSV effective HOLD). Report now shows **REVIEW_REQUIRED** and **AMBIGUOUS_MAPPING** at each preview row for any global mapping collision, while preserving original normalized record statuses, source fields, review queue and receipt hash. No warning for clean inputs; original HTML/CSV parsing/processing APIs unchanged. Two targeted positive/negative tests added; frozen ambiguous HTML golden SHA intentionally updated, other 3 PREP goldens unchanged.
