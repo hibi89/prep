@@ -1,3 +1,17 @@
+> **2026-11-12 P70 development update:** Independently authored PREP runtime, test suite and CLI are now committed to the PRIVATE `feature/core-extraction` branch. Tested local exact Git blobs on Linux Node22.16.0: **59/59 PASS**, plus fresh ZIP extraction 59/59, package dry-run and synthetic 20k-row benchmark. **70% functional candidate, NOT certified milestone:** SMAX behavioral parity, original-source rights/migration, CI, Windows and consumer acceptance remain open. `main` and `develop` are unchanged; no production deployment.
+>
+> Development commands on feature branch:
+> ```sh
+> npm test
+> npm run check
+> node bin/prep.mjs inspect --input examples/synthetic.csv
+> node bin/prep.mjs run --input examples/synthetic.csv --config examples/schema.json --output result.json
+> node bin/prep.mjs verify --source examples/synthetic.csv --receipt result.json
+> ```
+> The example deliberately raises REVIEW_REQUIRED (exit 2); output file must not exist. JSON numbers with decimal fractions are rejected for precision; use quoted strings. CSV export does not yet include a separate receipt. All input data stays local.
+>
+> **See latest [STATUS.md](STATUS.md) and [HANDOFF.md](HANDOFF.md); historical documentation-only statements below apply to the previous main baseline.**
+
 # PREP — Universal Data Preparation Engine
 
 **Status (2026-11-12 KST): repository bootstrap / no product release.**
