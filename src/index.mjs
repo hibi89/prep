@@ -16,7 +16,12 @@ const allowedTypes = new Set(['text','integer','decimal','boolean','date']);
 const safeValue = value => typeof value === 'string' ? value : value === null || value === undefined ? '' : typeof value === 'boolean' || typeof value === 'number' && Number.isSafeInteger(value) ? String(value) : typeof value === 'number' ? fail('UNSAFE_JSON_NUMBER') : fail('INVALID_CELL_TYPE');
 const utf8 = bytes => { try { return new TextDecoder('utf-8', { fatal: true }).decode(bytes).replace(/^\uFEFF/, ''); } catch { return fail('INVALID_UTF8'); } };
 const checkPlain = x => x !== null && typeof x === 'object' && !Array.isArray(x) && Object.getPrototypeOf(x) === Object.prototype;
-const noControl = x => typeof x === 'string' && !/[\u0000-\u001F\u007F\u200B-\u200D\u2060\uFEFF]/u.test(x);
+const noControl = x => typeof x === 'string' && !/[\u0000-\u001F\u007F-\u009F\p{Default_Ignorable_Code_Point}]/u.test(x);
+// Dangerous spreadsheet formulas may be concealed behind invisible Unicode marks.
+const formulaRisk = raw => {
+  const visible = raw.replace(/^[\s\u0000-\u001F\u007F-\u009F\p{Default_Ignorable_Code_Point}]*/u, '');
+  return /^[=+@-]/.test(visible) && !/^-?\d+(?:\.\d+)?$/.test(visible);
+};
 
 export function parseCSV(value) {
   if (typeof value !== 'string') fail('INVALID_CSV');
@@ -143,7 +148,7 @@ export function prepareDataset(bytes, format, config) {
     for (const f of schema.fields) {
       const raw = source.values[f.source] ?? '';
       if (typeof raw !== 'string') fail('INVALID_CELL_TYPE');
-      if (/^\s*[=+@]/.test(raw) || f.type === 'text' && /^\s*-(?!\d)/.test(raw)) addReason('FORMULA_RISK', f.name);
+      if (formulaRisk(raw)) addReason('FORMULA_RISK', f.name);
       if (!noControl(raw.replace(/[\r\n\t]/g, ''))) addReason('CONTROL_CHARACTER', f.name);
       if (!raw.trim()) { normalized[f.name] = null; if (f.required) addReason('MISSING_REQUIRED', f.name); continue; }
       try { normalized[f.name] = normalize(raw, f.type); }
@@ -151,7 +156,10 @@ export function prepareDataset(bytes, format, config) {
     }
     for (const col of extra) {
       const raw = source.values[col] ?? '';
-      if (typeof raw === 'string' && raw.trim()) addReason('UNMAPPED_FIELD', null);
+      if (typeof raw === 'string' && raw.trim()) {
+        addReason('UNMAPPED_FIELD', null);
+        if (formulaRisk(raw)) addReason('UNMAPPED_FORMULA_RISK', col);
+      }
     }
     // Exact-row identity includes unmapped source columns; normalized values can collide.
     const key = JSON.stringify(parsed.columns.map(col => source.values[col] ?? ''));
@@ -160,8 +168,52 @@ export function prepareDataset(bytes, format, config) {
     records.push({ source_record: i + 1, source_line: source.line, status: reasons.length ? 'REVIEW_REQUIRED' : 'OK_FOR_OWNER_REVIEW', reasons: [...new Set(reasons)], data: normalized });
   }
   const receipt = { schema_version: 1, transform_version: VERSION, source_sha256: digest(bytes), config_sha256: digest(JSON.stringify(schema)), source_format: format, input_rows: records.length, output_rows: records.length, review_rows: records.filter(x => x.status === 'REVIEW_REQUIRED').length, approval: 'NOT_GRANTED', execution: 'NOT_PERFORMED' };
+  const result = { status: receipt.review_rows ? 'REVIEW_REQUIRED' : 'OK_FOR_OWNER_REVIEW', receipt, review_queue, mapping_suggestions: suggestMappings(parsed.columns, schema), records };
+  // The source checksum alone cannot detect a post-export change to normalized rows.
+  receipt.result_sha256 = digest(JSON.stringify({ status: result.status, records, review_queue, mapping_suggestions: result.mapping_suggestions }));
   receipt.receipt_sha256 = digest(JSON.stringify(receipt));
-  return { status: receipt.review_rows ? 'REVIEW_REQUIRED' : 'OK_FOR_OWNER_REVIEW', receipt, review_queue, mapping_suggestions: suggestMappings(parsed.columns, schema), records };
+  return result;
+}
+
+/** A checksum-only sidecar binds exported bytes to the source receipt. No signing authority. */
+export function makeExportReceipt(result, content, format) {
+  if (!result || !checkPlain(result.receipt) || !['csv', 'html'].includes(format) ||
+      typeof content !== 'string') fail('INVALID_EXPORT');
+  const envelope = {
+    format_version: 'PREP_EXPORT_V1', format, source_receipt: result.receipt,
+    export_sha256: digest(Buffer.from(content, 'utf8')),
+    approval: 'NOT_GRANTED'
+  };
+  envelope.envelope_sha256 = digest(JSON.stringify(envelope));
+  return envelope;
+}
+
+export function verifyExport(bytes, envelope) {
+  if (!(bytes instanceof Uint8Array) || !checkPlain(envelope) ||
+      envelope.format_version !== 'PREP_EXPORT_V1' ||
+      !['csv', 'html'].includes(envelope.format) ||
+      envelope.approval !== 'NOT_GRANTED' || !checkPlain(envelope.source_receipt)) fail('INVALID_EXPORT_RECEIPT');
+  const { envelope_sha256, ...body } = envelope;
+  if (typeof envelope_sha256 !== 'string' || digest(JSON.stringify(body)) !== envelope_sha256) fail('EXPORT_RECEIPT_TAMPERED');
+  // Validate the enclosed source-receipt checksum separately, without presenting a signature.
+  const { receipt_sha256, ...r } = envelope.source_receipt;
+  if (typeof receipt_sha256 !== 'string' || digest(JSON.stringify(r)) !== receipt_sha256) fail('RECEIPT_TAMPERED');
+  if (digest(bytes) !== envelope.export_sha256) fail('EXPORT_BYTES_MISMATCH');
+  return { status: 'EXPORT_BYTES_MATCH', export_sha256: envelope.export_sha256 };
+}
+
+/** Validate normalized output and review queue against their own checksum. Not a signature. */
+export function verifyResult(result) {
+  if (!checkPlain(result) || !checkPlain(result.receipt) ||
+      !Array.isArray(result.records) || !Array.isArray(result.review_queue) ||
+      !Array.isArray(result.mapping_suggestions)) fail('INVALID_RESULT');
+  const {receipt_sha256, ...receiptBody} = result.receipt;
+  if (typeof receipt_sha256 !== 'string' || digest(JSON.stringify(receiptBody)) !== receipt_sha256) fail('RECEIPT_TAMPERED');
+  if (typeof result.receipt.result_sha256 !== 'string') fail('RESULT_RECEIPT_UNAVAILABLE');
+  const actual = digest(JSON.stringify({status:result.status,records:result.records,
+    review_queue:result.review_queue,mapping_suggestions:result.mapping_suggestions}));
+  if (actual !== result.receipt.result_sha256) fail('RESULT_TAMPERED');
+  return { status: 'RESULT_BYTES_MATCH', result_sha256: actual };
 }
 
 export function verifyReceipt(bytes, receipt) {
@@ -192,7 +244,7 @@ export async function readLocalFile(path, limit = LIMITS.inputBytes) {
 
 const escapeCSV = (v, textType) => {
   let s = v === null || v === undefined ? '' : String(v);
-  if (textType && /^\s*[=+@\-]/.test(s)) s = "'" + s;
+  if (textType && formulaRisk(s)) s = "'" + s;
   return '"' + s.replace(/"/g, '""') + '"';
 };
 export function renderCSV(result, config) {
@@ -225,13 +277,55 @@ export async function saveNewFile(path, content) {
   }
 }
 
-export async function runLocal({ input, config, output, format }) {
+/** Publish both new files from private same-directory staging areas.
+ * Two hardlinks cannot be one atomic transaction: a process crash may leave only
+ * one. Consumers must verify BOTH files and their matching hashes before use.
+ */
+export async function saveNewPair(output, content, receiptOutput, receiptContent) {
+  if (typeof output !== 'string' || !output.trim() ||
+      typeof receiptOutput !== 'string' || !receiptOutput.trim() ||
+      resolve(output) === resolve(receiptOutput)) fail('INVALID_PATH');
+  const paths = [output, receiptOutput];
+  const contents = [content, receiptContent];
+  const folders = [], stages = [], created = [];
+  try {
+    for (let i = 0; i < 2; i++) {
+      const folder = await mkdtemp(join(dirname(resolve(paths[i])), '.prep-staging-'));
+      folders.push(folder);
+      const stage = join(folder, 'data');
+      stages.push(stage);
+      const h = await open(stage, 'wx', 0o600);
+      try { await h.writeFile(contents[i]); await h.sync(); } finally { await h.close(); }
+    }
+    // Refuse existing paths with hardlink's native EEXIST behavior; never overwrite.
+    await link(stages[0], paths[0]);
+    created.push(paths[0]);
+    await link(stages[1], paths[1]);
+    created.push(paths[1]);
+  } catch (e) {
+    for (const p of created.reverse()) await unlink(p).catch(() => {});
+    if (e?.code === 'EEXIST') fail('OUTPUT_EXISTS');
+    if (e instanceof PrepError) throw e;
+    fail('OUTPUT_UNAVAILABLE');
+  } finally {
+    for (const p of stages) await unlink(p).catch(() => {});
+    for (const p of folders) await rmdir(p).catch(() => {});
+  }
+}
+
+export async function runLocal({ input, config, output, format, receiptOutput }) {
   if (!input || !config || !output || resolve(input) === resolve(output) || resolve(config) === resolve(output)) fail('INVALID_PATH');
+  if (receiptOutput && (typeof receiptOutput !== 'string' || !receiptOutput.trim() ||
+      [input, config, output].some(p => resolve(p) === resolve(receiptOutput)))) fail('INVALID_PATH');
   const bytes = await readLocalFile(input), configText = utf8(await readLocalFile(config, LIMITS.configBytes));
   let options; try { options = JSON.parse(configText); } catch { fail('INVALID_CONFIG_JSON'); }
   const kind = format || (/\.json$/i.test(input) ? 'json' : /\.csv$/i.test(input) ? 'csv' : fail('UNSUPPORTED_FORMAT'));
   const result = prepareDataset(bytes, kind, options);
   const content = /\.csv$/i.test(output) ? renderCSV(result, options) : /\.json$/i.test(output) ? JSON.stringify(result, null, 2) + '\n' : /\.html?$/i.test(output) ? renderHTML(result, options) : fail('UNSUPPORTED_OUTPUT_FORMAT');
-  await saveNewFile(output, content);
+  if (receiptOutput) {
+    const exportFormat = /\.csv$/i.test(output) ? 'csv' : /\.html?$/i.test(output) ? 'html' : fail('UNSUPPORTED_RECEIPT_OUTPUT');
+    const receipt = makeExportReceipt(result, content, exportFormat);
+    await saveNewPair(output, content, receiptOutput, JSON.stringify(receipt, null, 2) + '\n');
+  } else await saveNewFile(output, content);
   return { status: result.status, rows: result.receipt.input_rows, review_rows: result.receipt.review_rows, source_sha256: result.receipt.source_sha256 };
 }
