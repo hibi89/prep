@@ -40,7 +40,7 @@ test('schema rejects unknown flags',()=>assert.throws(()=>validateConfig({...cfg
 test('mapping suggestions are never applied',()=>{let s=suggestMappings(['Day','DAY','Price','Flag','Memo'],cfg); assert.deepEqual(s[0].candidates,['Day','DAY']); assert.equal(s[0].status,'REVIEW_REQUIRED');});
 test('mapped source missing fails closed',()=>assert.throws(()=>prepareDataset(bytes('day,Price,Flag,Memo\n2026-02-28,3,yes,hi'), 'csv',cfg),error('MISSING_MAPPED_COLUMN')));
 
-test('normalizes leap date, decimal, boolean, NFC text',()=>{const r=prepareDataset(bytes(csv('2024/02/29,0001.2300,yes,e\u0301')),'csv',cfg);assert.equal(r.status,'OK_FOR_OWNER_REVIEW');assert.deepEqual({...r.records[0].data},{day:'2024-02-29',price:'1.23',flag:true,memo:'Ã©'});});
+test('normalizes leap date, decimal, boolean, NFC text',()=>{const r=prepareDataset(bytes(csv('2024/02/29,0001.2300,yes,e\u0301')),'csv',cfg);assert.equal(r.status,'OK_FOR_OWNER_REVIEW');assert.deepEqual({...r.records[0].data},{day:'2024-02-29',price:'1.23',flag:true,memo:'é'});});
 test('rejects impossible calendar date into review',()=>{const r=prepareDataset(bytes(csv()),'csv',cfg);assert.equal(r.status,'REVIEW_REQUIRED');assert.equal(r.review_queue[0].code,'INVALID_TYPE');assert.equal(r.records.length,1);});
 test('missing required is retained, not lost',()=>{const r=prepareDataset(bytes(csv('2024-02-29,,yes,text')),'csv',cfg);assert.equal(r.receipt.input_rows,r.receipt.output_rows);assert.equal(r.review_queue[0].code,'MISSING_REQUIRED');});
 test('formula flagged, not executed',()=>{const r=prepareDataset(bytes(csv('2024-02-29,1,no,=SUM(A1)')),'csv',cfg);assert.equal(r.review_queue[0].code,'FORMULA_RISK');});
