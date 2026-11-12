@@ -2,7 +2,7 @@
 Date: 2026-11-12 KST. Planning requirements only.
 
 ## Data sovereignty
-- The repository is presently PUBLIC. **No privately licensed source or data may be uploaded until visibility and rights are resolved.**
+- The repository was PUBLIC during bootstrap but is **verified PRIVATE as of 2026-11-12 KST** after the owner's change. Private visibility does **not** itself grant source licensing rights or authorize committing raw customer data, secrets, credentials or third-party proprietary materials. Review ownership, dependencies, secure migration and access rights before source transfer.
 - User-selected data files are processed locally. No network call, telemetry, model upload, analytics beacon or paid API in the default core.
 - Keep original data immutable. Require explicit destination for generated outputs, fail if target already exists and avoid partial files via atomic write.
 - Do not log raw rows, filenames that contain identifying information, secrets or credentials by default.
