@@ -15,6 +15,7 @@
   "bin": {
     "prep": "./bin/prep.mjs"
   },
+  "files": ["src/", "bin/", "examples/", "docs/SDK_CONTRACT.md"],
   "scripts": {
     "test": "node --test test/*.test.mjs",
     "check": "node --check src/index.mjs && node --check src/report.mjs && node --check src/sdk.mjs && node --check bin/prep.mjs"
