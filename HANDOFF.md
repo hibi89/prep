@@ -1,3 +1,17 @@
+# CURRENT PREP REGRESSION / PARITY HANDOFF ADDENDUM — 2026-11-12 KST
+1. **Goal:** Independent offline PREP R01–R12; P70 functionality candidate, no release.
+2. **Change:** Fixed false exact-duplicate detection by comparing every raw source column rather than normalized mapped fields. 2 new negative/positive regression tests. Original SMAX unchanged; provenance comparison read-only.
+3. **Tests:** Node22.16.0 Linux native 61/61 PASS (FAIL0 SKIP0); clean ZIP extraction 61/61 PASS; syntax check PASS and pack dry-run PASS. GitHub source SHA `a9285b06c08a2483565c48eb19ebaca175ae405a` and test SHA `a8831717eb90e1e2f9ce57e663c3f0e6181272c1` exactly match local executed files.
+4. **State:** P70 integrated features committed in PRIVATE `hibi89/prep@feature/core-extraction`; **official 70% NOT CERTIFIED**, canonical completion UNASSESSED; main/develop unchanged; RELEASE HOLD.
+5. **Gap / failure evidence:** SMAX generic CSV read-only code source `3b6cedae4869b7d8d5ae587f8d565812b6d9e193` differs in numeric grouping/decimal representation, compact/separator date rules, boolean vocabulary and review/evidence object contract. Duplicate identity now consistent for full raw rows. Full golden parity/rights still missing, do not reuse incomplete validation.
+6. **Code/ref:** PREP implementation checkpoint `9e10a96f9870d1bf90b64a2ef07ca8b85200d8d7`; source/test blobs above; pre-change safe baseline `15e21dbe1ccac516dff93967c538b7645e756a3f`. Current docs branch HEAD may be later.
+7. **Production/environment:** Not deployed; local Node22 Linux verified, Node20+ targeted, Windows/CI/product consumer unverified.
+8. **Backups/security:** Git SHA history rollback, original SMAX untouched; no customer data, credentials, paid API, rights change or external publishing.
+9. **Next:** owner-approved rights/provenance audit and golden cross-contract tests; versioned compatibility policy if intentional normalization differences. Then close export/receipt security, native Windows and consumer adapter and reassess P70.
+10. **Timestamp/evidence:** 2026-11-12 KST; synthetic ZIP integrity valid; ZIP SHA256 `3bb112b7a12d3d2019e5239fdeb6f1dd32b3d89c6bd935d036107c453471fb85`. See new STATUS section and existing handoff for earlier implementation details.
+
+---
+
 # CURRENT PREP TECHNICAL HANDOFF — P70 CANDIDATE (2026-11-12 KST)
 
 1. **Goal/design/stack:** Independent PREP offline local-first engine per R01–R12, Node20+ ESM, 70% milestone target; original SMAX unchanged and not copied.
