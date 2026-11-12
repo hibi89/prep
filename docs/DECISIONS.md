@@ -1,3 +1,10 @@
+## D17 — HTML preview must reflect dataset-level HOLD (2026-11-12 KST)
+- A: rewrite underlying per-row record status and receipt for ambiguous mapping: misleading row-quality provenance, breaks result golden/SDK consumers and may require schema version change. Rejected.
+- B: derive a display-only effective REVIEW_REQUIRED plus AMBIGUOUS_MAPPING in each HTML preview row when dataset-level mapping collision exists, preserving original records/receipt and already-correct CSV. Selected B (small localized change, zero paid calls, no new dependencies). Two tests prove HOLD visibility and no source/result mutation, adjusted only ambiguous HTML frozen SHA. Linux 150 native and 150 network-disabled tests PASS.
+- No implied migration of private SMAX source or formal compatibility verdict. Hosted CI and original Node golden comparison still require environment and explicit approvals.
+
+---
+
 ## D16 — JSON duplicate key denial and reserved CSV metadata names (2026-11-12 KST)
 - Duplicate JSON key alternatives: (A) allow default JSON.parse last-wins silently, data loss risk and untraceable provenance; (B) reject duplicated decoded keys within each flat record before normalization and receipt. **Chosen B**, linear bounded scan, exact+Unicode-escaped duplicates blocked; preserves repeated keys across distinct rows.
 - Metadata collision alternatives: (A) auto-rename reserved user fields, potentially changing mapping and reviewer expectations; (B) explicitly refuse field names that case-fold/NFKC to __source_record, __status or __reasons. **Chosen B**, preserves CSV fixed header contract and avoids status spoofing.
