@@ -29,13 +29,13 @@ Other formats (including XLSX), document ingestion, streaming scale, optional AI
 ## Current verified state
 - This is a **new repository**. Independent PREP source, tests, CI and release are **not yet migrated or verified**.
 - The existing internal preprocessing baseline remains at its original location, unchanged. It must **not** be copied into a public repository.
-- **Privacy gate:** this repository was observed as **public** at bootstrap, whereas the intended reusable source is private. Only non-confidential planning documents may be committed here until the owner explicitly authorizes a privacy change and a source-migration review.
+- **Privacy confirmed:** this repository was **PUBLIC at bootstrap** but the owner changed it to **PRIVATE** on 2026-11-12 KST (confirmed via GitHub). The visibility gate is resolved; review extraction rights, upstream dependencies, source backup and parity before transferring any code.
 - An earlier completion percentage for the upstream combined product is **not** a PREP-only product completion claim.
 
 ## Branch model
 - `main`: reviewed documentation and validated release-ready code only.
 - `develop`: integration staging after independent checks.
-- `feature/core-extraction`: isolate the reusable core and its tests; no private source while this repo remains public.
+- `feature/core-extraction`: isolate approved reusable core and synthetic tests after upstream inventory/rights and rollback review; preserve private visibility.
 
 Feature branches merge via review and checks; no force-push or unauthorized public deployment.
 
