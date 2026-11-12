@@ -151,7 +151,8 @@ export function prepareDataset(bytes, format, config) {
       const raw = source.values[col] ?? '';
       if (typeof raw === 'string' && raw.trim()) addReason('UNMAPPED_FIELD', null);
     }
-    const key = JSON.stringify(normalized);
+    // Exact-row identity includes unmapped source columns; normalized values can collide.
+    const key = JSON.stringify(parsed.columns.map(col => source.values[col] ?? ''));
     if (duplicates.has(key)) addReason('DUPLICATE_RECORD');
     else duplicates.add(key);
     records.push({ source_record: i + 1, source_line: source.line, status: reasons.length ? 'REVIEW_REQUIRED' : 'OK_FOR_OWNER_REVIEW', reasons: [...new Set(reasons)], data: normalized });
