@@ -1,3 +1,12 @@
+## 2026-11-12 — Post-comparison P70 evidence update (supersedes 59 test checkpoint)
+- Linux Node22 native **61/61 PASS / 0 FAIL / 0 SKIP**, clean ZIP **61/61 PASS**; syntax/pack smoke PASS.
+- Confirmed exact source/test Git blobs: `a9285b06c08a2483565c48eb19ebaca175ae405a` and `a8831717eb90e1e2f9ce57e663c3f0e6181272c1`.
+- R04 duplicate regression: exact raw source rows including unmapped values used; previously a false-positive duplicate could occur when only normalized mapped values matched. Negative and positive cases both pass.
+- **Parity gap not resolved:** SMAX generic preprocessing contract has differing decimal grouping/precision preservation, date syntax, boolean vocabulary and source package shape/reason taxonomy. Tested candidate is **not an interchangeable SMAX replacement**; rights and approved golden mapping unverified.
+- **Formal 70% NOT CERTIFIED**, product completion UNASSESSED despite standalone candidate features. Windows, GitHub CI, pinned authorized consumer, production and release NOT_RUN/HOLD.
+
+---
+
 ## 2026-11-12 — P70 candidate evidence (feature branch; no release acceptance yet)
 
 | Requirement | Current technical evidence | Gate |
