@@ -1,3 +1,12 @@
+## D13 — Ambiguous candidate HOLD and native-only frozen goldens (2026-11-12 KST)
+- **Mapping design A:** expose ambiguous aliases only as suggestions and leave the dataset ready. Cheap but violates R06 when every mapped source exists and a second canonical alias also exists. **Rejected.**
+- **Mapping design B:** preserve explicit selected values and per-row status, but issue global AMBIGUOUS_MAPPING review queue items and force dataset REVIEW_REQUIRED. No silent re-mapping; review_rows counts only defective source rows. **Selected**, tested on CSV and JSON.
+- **Golden strategy A:** import/execute private SMAX source immediately: highest parity proof, but source provenance, scope, IP and owner approval remain unresolved. **Not permitted yet.**
+- **Golden strategy B:** freeze PREP-native full-result/CSV/HTML SHA for four synthetic scenarios and document upstream source/test SHA inventory read-only; proves independent determinism, not SMAX parity. **Selected for current authorized scope**. Execute two-engine comparator later only with owner approval.
+- Direct parser byte gates enforce same 2MiB cap as prepareDataset; reject unknown schema-field options/empty-run CSV. CR-only quoted cell newlines now advance source location once, native regressions pass. 121 full Linux tests and 121 network-disabled tests PASS. Zero paid calls/rights changes.
+
+---
+
 ## D12 — P85 receipt strategy and Unicode security (2026-11-12 KST)
 - A: mandatory automatic sidecar with each CSV/HTML export, simpler to force proof but breaking existing single-file callers and recovery assumptions. B: opt-in explicit receiptOutput and CLI flag, new-only paired staging with rollback. **B chosen** for additive backward compatibility and zero paid API cost. OS process crash may leave one of two files; a consumer must verify both.
 - Source-only SHA could not detect changes to normalized JSON records. Add result_sha256 over records/review queue/mapping/status and verifyResult, while preserving historic source-only receipt verification. These are checksums, not issuer authentication.

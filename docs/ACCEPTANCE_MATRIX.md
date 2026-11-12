@@ -1,3 +1,14 @@
+## 2026-11-12 KST — P85 contract and source-identity evidence (LATEST)
+- **Commit:** PRIVATE PREP feature/core-extraction verified implementation **fd3b68c45fd9323dc67debf47171e778084266a4**. Exact 4 changed/new source/test blobs SHA-matched and GitHub commit created. 121 native Linux tests PASS (0 FAIL/0 SKIP), 121 isolated no-network PASS, npm run check PASS.
+- **R02/R06/R09:** CSV/header-only invalidity, strict field-schema unknown parameters, direct parser byte cap, JSON wrong type and multiline CRLF lineage tested. Ambiguous case-insensitive/NFKC candidate mapping now forces **dataset-level REVIEW_REQUIRED** even if explicit mapped data has zero record issues, with AMBIGUOUS_MAPPING in queue; no auto-apply.
+- **R03/R04/R05/R07/R08/R11:** Four self-contained PREP synthetic goldens for normalized result-envelope SHA and CSV/HTML SHA; frozen expected hashes not copied from SMAX. 20,000 exact row limit, 64 mapped columns and 2MiB accepted boundaries, 20,001/65/+1 refused without silent loss. Existing checksum-only sidecar, JSON result integrity and formula-protection still pass. SHA != signing.
+- **R01/R11 Linux/package:** Node22.16 native 121/121 and unshare no-network 121/121 PASS, npm pack dry-run PASS, local staged seven-file tarball SHA256 1acc3fae07591f12a87421182d13cf144670b96d943e67576be70cb4778e738f installed offline SDK/report/CLI CSV receipt smoke PASS. Exact full remote docs packaging NOT VERIFIED.
+- **Upstream:** SMAX read-only private branch HEAD 3830cb276f560d58e8181ba384d9cbe64815737c and generic source/test blob IDs inventory in docs/UPSTREAM_INTERFACE_INVENTORY_20261112.md. Contract divergences documented; executable SMAX-to-PREP golden compatibility remains **UNVERIFIED**, source transfer/rights not approved.
+- **CI:** GitHub commit combined statuses: **0**. Manual workflow not dispatched; hosted Linux CI **NOT_RUN**, not a PASS. Windows and consumer integration **NOT_RUN**.
+- **Certification:** Formal **85% NOT CERTIFIED**; legacy upstream golden/parity prerequisite also open, final overall rate UNASSESSED, RELEASE HOLD. No production or private source migration.
+
+---
+
 ## 2026-11-12 KST — P85 SHA-bound runtime and security evidence
 - Candidate code SHA 9a7e6f6cc69632158211587d87a0a6c09da674ce, PRIVATE PREP feature/core-extraction; tested locally from exact matching Git blobs.
 - R04/R05/R07/R08: MAPPED and UNMAPPED formula risk detects hidden Unicode; JSON result checksum covers records/review/status/mapping; optional CSV/HTML sidecar binds exported bytes to source receipt. Non-overwrite tests, paired-output cleanup and tamper negatives PASS. Sidecar pair can be partial after crash; digest is not an authenticated issuer signature.
