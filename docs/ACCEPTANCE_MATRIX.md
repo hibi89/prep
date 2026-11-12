@@ -1,3 +1,11 @@
+## 2026-11-12 KST — P85 differential evidence (LATEST)
+- Code SHA e41c57f23c4301eb5195c2c84e181ca9cf264761. Local PREP Linux Node22.16 native 133 PASS/0 FAIL/0 SKIP; network-isolated 133 PASS; syntax and npm pack dry-run PASS.
+- 11 synthetic original-SMAX core comparisons via isolated V8 + checksum stub: normalized value and review flag same for 6, different for 5. This is NOT native Node original-SMAX validated golden/receipt equivalence.
+- 12 PREP-local frozen semantic tests, external-checkout pinned native comparator script committed and syntax checked. Native original SMAX checkout unavailable in sandbox: script NOT_RUN on real source. Hosted GitHub CI NOT_RUN. Current exact remote package and Windows/consumer NOT_RUN.
+- P50/P70 original-SMAX parity prerequisite and formal 85% acceptance NOT CERTIFIED; canonical product score UNASSESSED; RELEASE HOLD. No upstream copy or modification.
+
+---
+
 ## 2026-11-12 KST — P85 contract and source-identity evidence (LATEST)
 - **Commit:** PRIVATE PREP feature/core-extraction verified implementation **fd3b68c45fd9323dc67debf47171e778084266a4**. Exact 4 changed/new source/test blobs SHA-matched and GitHub commit created. 121 native Linux tests PASS (0 FAIL/0 SKIP), 121 isolated no-network PASS, npm run check PASS.
 - **R02/R06/R09:** CSV/header-only invalidity, strict field-schema unknown parameters, direct parser byte cap, JSON wrong type and multiline CRLF lineage tested. Ambiguous case-insensitive/NFKC candidate mapping now forces **dataset-level REVIEW_REQUIRED** even if explicit mapped data has zero record issues, with AMBIGUOUS_MAPPING in queue; no auto-apply.

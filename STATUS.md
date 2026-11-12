@@ -1,3 +1,12 @@
+## 2026-11-12 KST — P85 comparison checkpoint (LATEST)
+- Code SHA e41c57f23c4301eb5195c2c84e181ca9cf264761; prior code fd3b68c45fd9323dc67debf47171e778084266a4; upstream SMAX unchanged.
+- Original SMAX CSV/parser logic evaluated read-only in isolated V8 with SHA calculation stub; 11 synthetic cases: 6 equivalent values/review flags, 5 differences (compact date, grouped decimal, scale, yes boolean, over-64-bit integer). NOT native Node upstream parity.
+- New synthetic fixture, 12 PREP-only differential assertions and pinned external-checkout Node comparison runner. Runner syntax PASS, but original SMAX checkout unavailable locally, so native comparison NOT_RUN.
+- Linux Node22.16 full suite 133 PASS / 0 FAIL / 0 SKIP; network-disabled Linux full suite 133 PASS. npm check and pack dry-run PASS; no hosted GitHub CI.
+- Formal 85% NOT CERTIFIED, final completion UNASSESSED, RELEASE HOLD. No production, license, billing, visibility or upstream changes.
+
+---
+
 ## 2026-11-12 KST — PREP P85 data-contract and native golden checkpoint (LATEST)
 - **Repo/branch/source code SHA:** PRIVATE hibi89/prep feature/core-extraction, tested code **fd3b68c45fd9323dc67debf47171e778084266a4**, last rollback/docs SHA b3bed36d6438b1a3603ffb686451f740becf8e4e; changed src/index.mjs and added 3 complete test suites. Source and tests matched GitHub blob SHA before commit. Upstream SMAX and PREP main/develop unchanged.
 - **New behavioral protections:** Multi-alias mapping candidate conflict now creates global AMBIGUOUS_MAPPING review queue items and forces dataset REVIEW_REQUIRED, with existing explicitly selected field data preserved (row-level review_rows can still equal 0). Header-only CSV fails EMPTY_SOURCE_ROWS; unknown schema-field parameters fail; parseJSON wrong JS input type and direct parseCSV/parseJSON oversized input fail with explicit codes. Quoted CRLF/CR-only CSV field line provenance corrected.

@@ -1,3 +1,12 @@
+## 2026-11-12 KST — original-source semantic execution evidence (LATEST)
+- Read-only SMAX preprocessing HEAD 3830cb276f560d58e8181ba384d9cbe64815737c; original generic-csv blob 3b6cedae4869b7d8d5ae587f8d565812b6d9e193, CSV tokenizer blob 26d84c9a59216107ab492aedfcd91cd571e40c66.
+- Unmodified parsing/normalization *logic* evaluated in isolated V8 with ESM wrapper removed and SHA-256 substituted with a fixed stub. Eleven synthetic inputs compared with native PREP: six same normalized value/review flag, five divergent (compact date, grouped decimal, decimal scale, boolean 'yes', above-int64 integer).
+- Not original Node execution, real SHA, validator verification, end-to-end source/receipt parity or license clearance.
+- Synthetic-only observations committed in fixtures/smax-generic-differential.mjs and 12 PREP test assertions. Read-only actual Node comparator scripts/compare-smax-checkout.mjs requires a separate checkout at exact SMAX pinned commit; NOT_RUN because no local checkout was available. No original private source stored in PREP repo.
+- PREP Linux native and no-network 133/133 PASS; GitHub hosted CI not executed. Formal 85% not certified. RELEASE HOLD.
+
+---
+
 # PREP vs SMAX generic preprocessing — read-only contract inventory
 **Date:** 2026-11-12 KST. **Classification:** private repository metadata and abstract API differences only. **No upstream source transfer, executable parity or license clearance.**
 

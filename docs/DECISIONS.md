@@ -1,3 +1,11 @@
+## D14 — PREP-SMAX read-only comparison (2026-11-12 KST)
+- A: copy original SMAX generic source into PREP tests. Lower initial setup cost but source-rights, disclosure and coupling risks; not approved.
+- B: use synthetic-only reference observations plus an opt-in SHA-pinned separate local SMAX checkout comparator. Zero source copied to PREP and no cloud cost; native comparison remains blocked until authorized private checkout is present. Chosen B.
+- Read-only original SMAX logic executed in isolated V8 with mocked digest: 11 synthetic cases, 6 equivalent value/review states and 5 policy differences. Initial alias-binding error corrected on retry. No claim of original Node-native/receipt parity.
+- Do not alter PREP normalization to mimic SMAX without explicit compatibility policy. Linux PREP 133/133 PASS; original native comparator and hosted GitHub CI NOT_RUN. RELEASE HOLD.
+
+---
+
 ## D13 — Ambiguous candidate HOLD and native-only frozen goldens (2026-11-12 KST)
 - **Mapping design A:** expose ambiguous aliases only as suggestions and leave the dataset ready. Cheap but violates R06 when every mapped source exists and a second canonical alias also exists. **Rejected.**
 - **Mapping design B:** preserve explicit selected values and per-row status, but issue global AMBIGUOUS_MAPPING review queue items and force dataset REVIEW_REQUIRED. No silent re-mapping; review_rows counts only defective source rows. **Selected**, tested on CSV and JSON.

@@ -1,3 +1,17 @@
+# 2026-11-12 KST — P85 differential handoff (LATEST; ten items)
+1. Goal: standalone PREP R01–R12, P85 Linux/SDK/report/security/CI acceptance, RELEASE HOLD.
+2. Changes: 11 synthetic SMAX/PREP comparison snapshots (6 same value/review, 5 different), 12 PREP regressions, SHA-pinned read-only comparator for a separate SMAX checkout. No source migration.
+3. Tests: exact PREP code e41c57f23c4301eb5195c2c84e181ca9cf264761; Linux Node22.16 npm test 133 PASS/0 FAIL/0 SKIP, network-disabled 133 PASS, npm check and pack dry-run PASS. Prior 121-case local offline package install PASS; latest packaged install NOT_RUN.
+4. State: formal 85% NOT CERTIFIED; upstream P50/P70 parity unresolved, product score UNASSESSED, RELEASE HOLD.
+5. Problems: original SMAX modules evaluated in ephemeral isolated V8 with SHA stub, NOT original Node/real crypto/validator. First module-alias error corrected. Pinned original SMAX checkout unavailable, so native runner NOT_RUN; hosted GitHub CI NOT_RUN.
+6. Repo: PRIVATE hibi89/prep feature/core-extraction, code SHA e41c57f23c4301eb5195c2c84e181ca9cf264761; rollback c8fa038e1e4972fa4c4b8a2db8e4c531a170be9c. New fixtures/smax-generic-differential.mjs, test/smax-generic-differential.test.mjs, scripts/compare-smax-checkout.mjs.
+7. Environment: x86_64 Linux Node22.16 local; Windows/Node20/consumer NOT_RUN, Production and Vercel N/A.
+8. Originals: hibi89/SMAX preprocessing pinned 3830cb276f560d58e8181ba384d9cbe64815737c unchanged; PREP main/develop unchanged; synthetic-only, no credentials, permission changes, customer data, paid CI or public release.
+9. Next: owner-approved private pinned SMAX checkout execution, explicit compatibility policy, authorized GitHub CI if billing involved; Windows/pinned consumer at later gates. Run: node scripts/compare-smax-checkout.mjs --checkout LOCAL_SMAX_PATH.
+10. Updated: 2026-11-12 KST, native PREP 133/133 and limited V8 SMAX 11-case comparison; current documentation commit to be confirmed after push.
+
+---
+
 # 2026-11-12 KST — PREP P85 data-contract/golden hardening handoff (LATEST; ten items)
 1. **Goal/confirmed design:** Independent PREP local-first Node20+ ESM, CSV/JSON explicit mapping and bounded normalization, R01–R12 final blueprint; immediate 85 gate is SDK, offline proof, secure report/exports, Linux CI.
 2. **Done and decisions:** Fixed ambiguous candidate mapping not propagating to global HOLD; preserve explicit source values and emit AMBIGUOUS_MAPPING at dataset level. Reject empty-data CSV, unknown field config options, invalid JS JSON type, direct oversized parser input; correct quoted CR/CRLF lineage. Add four PREP-native SHA goldens and 20k/64col/2MiB boundary tests. No original SMAX code copied. Chose independent clean-room path over silent code transfer; see upstream inventory for alternatives.
