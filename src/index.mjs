@@ -101,8 +101,8 @@ function normalize(value, type) {
   }
   if (type === 'boolean') {
     const x = v.toLowerCase();
-    if (['1', 'yes', 'y', 'true', 'ì'].includes(x)) return true;
-    if (['0', 'no', 'n', 'false', 'ìëì¤'].includes(x)) return false;
+    if (['1', 'yes', 'y', 'true', '예'].includes(x)) return true;
+    if (['0', 'no', 'n', 'false', '아니오'].includes(x)) return false;
     fail('INVALID_TYPE');
   }
   if (type === 'date') {
