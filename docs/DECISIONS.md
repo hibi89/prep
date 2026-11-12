@@ -1,3 +1,11 @@
+## D18 — Owner approved independent PREP at P85 (2026-11-12 KST)
+- **Approved directly by owner:** Architecture A from `docs/P85_GATE_AUDIT_20261112.md`. PREP has its own deliberately independent, versioned normalization and review contract. Preserve upstream SMAX and its five documented differing semantics without forcing drop-in parity for P85.
+- **Alternative B not chosen:** Build or import a SMAX-specific adapter now; adds maintenance, source-rights, test, and compatibility risk. If required later, obtain targeted approval, compare exact native upstream goldens and isolate the adapter from PREP's stable core.
+- **Scope boundary:** This choice resolves a *policy blocker*, NOT a CI failure. Existing source-migration rights and golden parity remain mandatory only before an actual SMAX consumer substitution. `REQUIREMENTS.md`, `docs/FINAL_PRODUCT_BLUEPRINT.md`, original progress gate text, P95/P100 scope and historical evidence are unchanged.
+- **Evidence and state:** Function SHA `a4c71258851af4b0d8540202f36c84c1438ad9e6`, Linux native 150/150, no-network 150/150, fresh runtime package smoke from prior execution. Formal 85% still depends on real GitHub-hosted Linux CI. Manual CI dispatch may use paid private runner minutes; no charge, trigger change or dispatch was approved or performed.
+
+---
+
 ## D17 — HTML preview must reflect dataset-level HOLD (2026-11-12 KST)
 - A: rewrite underlying per-row record status and receipt for ambiguous mapping: misleading row-quality provenance, breaks result golden/SDK consumers and may require schema version change. Rejected.
 - B: derive a display-only effective REVIEW_REQUIRED plus AMBIGUOUS_MAPPING in each HTML preview row when dataset-level mapping collision exists, preserving original records/receipt and already-correct CSV. Selected B (small localized change, zero paid calls, no new dependencies). Two tests prove HOLD visibility and no source/result mutation, adjusted only ambiguous HTML frozen SHA. Linux 150 native and 150 network-disabled tests PASS.
