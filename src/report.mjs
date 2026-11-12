@@ -12,14 +12,16 @@ export function renderHTML(result, config) {
       !result.receipt || !config || !Array.isArray(config.fields)) throw new TypeError('INVALID_REPORT');
   const cols = config.fields.map(f => f.name);
   const receipt = result.receipt;
+  const globalHold = result.review_queue.some(item => item.code === 'AMBIGUOUS_MAPPING');
   const previews = result.records.slice(0, REPORT_PREVIEW_LIMIT).map(r => {
     const values = cols.map(c => cell(r.data?.[c]));
-    return `<tr>${cell(r.source_record)}${cell(r.status)}${values.join('')}${cell((r.reasons ?? []).join(', '))}</tr>`;
+    const status = globalHold ? 'REVIEW_REQUIRED' : r.status;
+    const reasons = globalHold ? [...new Set([...(r.reasons ?? []), 'AMBIGUOUS_MAPPING'])] : (r.reasons ?? []);
+    return `<tr>${cell(r.source_record)}${cell(status)}${values.join('')}${cell(reasons.join(', '))}</tr>`;
   }).join('\n');
   const issues = result.review_queue.slice(0, REPORT_PREVIEW_LIMIT).map(r =>
     `<tr>${cell(r.record)}${cell(r.source_line)}${cell(r.code)}${cell(r.field)}</tr>`
   ).join('\n');
-  const globalHold = result.review_queue.some(item => item.code === 'AMBIGUOUS_MAPPING');
   const holdNotice = globalHold
     ? '<p><strong>DATASET REVIEW REQUIRED:</strong> Mapping candidates are ambiguous. No rows are approved, even if Review rows is 0.</p>'
     : '';

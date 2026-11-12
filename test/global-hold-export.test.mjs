@@ -27,3 +27,18 @@ test('ordinary ready export is unchanged with no spurious mapping warning',()=>{
  assert.doesNotMatch(renderCSV(r,sc),/AMBIGUOUS_MAPPING/);
  assert.doesNotMatch(renderHTML(r,sc),/DATASET REVIEW REQUIRED/);
 });
+
+test('global mapping ambiguity marks HTML preview rows as review-required',()=>{
+ const html=renderHTML(run(),schema);
+ assert.match(html, /<td>REVIEW_REQUIRED<\/td>/);
+ assert.match(html, /<td>AMBIGUOUS_MAPPING<\/td>/);
+ assert.doesNotMatch(html, /<td>OK_FOR_OWNER_REVIEW<\/td>/);
+});
+test('global HOLD rendering is presentation only; receipt and records remain unchanged',()=>{
+ const result=run();
+ const before=JSON.stringify(result);
+ renderHTML(result,schema);
+ renderCSV(result,schema);
+ assert.equal(JSON.stringify(result),before);
+ assert.equal(verifyResult(result).status,'RESULT_BYTES_MATCH');
+});
