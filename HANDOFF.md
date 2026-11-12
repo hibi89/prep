@@ -1,3 +1,20 @@
+# CURRENT PREP TECHNICAL HANDOFF — P70 CANDIDATE (2026-11-12 KST)
+
+1. **Goal/design/stack:** Independent PREP offline local-first engine per R01–R12, Node20+ ESM, 70% milestone target; original SMAX unchanged and not copied.
+2. **Delivered/decision:** Authored an independent bounded 2MiB/20k-row/64-column CSV+JSON deterministic engine; schema/explicit mapping/suggestions, normalized rows, review queue, SHA evidence, guarded no-overwrite JSON/CSV, CLI inspect/run/verify. Compared full SMAX copy vs selective licensed extraction vs independent clean-room; clean-room used to avoid source transfer without rights inventory.
+3. **Executed tests:** Linux Node22.16.0 `npm test` 59 PASS/0 FAIL/0 SKIP, `npm run check` PASS, npm pack dry-run PASS; fresh ZIP-extracted copy 59 PASS. A synthetic 20k-row input completed; Windows, GitHub CI and downstream consumer E2E NOT_RUN. Exact six GitHub blob hashes match tested local files (see current STATUS).
+4. **State/stop point:** PRIVATE feature/core-extraction has GitHub source, CLI, tests, examples. 70% *functional candidate* implemented; **canonical 70% milestone NOT CERTIFIED** due upstream golden parity and source-rights/migration gate not passed; main/develop not promoted. RELEASE HOLD.
+5. **Failures/recovery:** Initial encoded transfer length mismatch was aborted before writes; alternate per-file transfer verified SHA and corrected Unicode encoding. No remaining functional test failures. Do not retry private SMAX clone using known failed DNS path or count mocks as E2E.
+6. **Repo/branch/SHA/paths:** `hibi89/prep@feature/core-extraction`, implementation checkpoint `75a4e27257ddfc56014e4772eb54b4e8bdc59084` (current final HEAD may advance with docs). Core `src/index.mjs` blob `ca35fba85d7045042f701d54954aeea04a901ca9`; test `test/prep.test.mjs` blob `96ba90427bd3f78ae8d8a7d2156fa82115f90335`. Pre-change branch SHA `15e21dbe1ccac516dff93967c538b7645e756a3f`.
+7. **Deployment/environment:** Production/Vercel N/A, no deployment. Local `npm test`, `npm run check`, `node bin/prep.mjs --help` on Node20+ target; only Node22 Linux verified.
+8. **Source/backup/security:** Upstream `hibi89/SMAX` PRIVATE `preprocessing` ownership/rights and golden comparison pending. No source copied, no customer fixtures, secrets, API calls, cloud, credentials, license release or original edits. Git pre-change SHA provides rollback.
+9. **Next work/acceptance:** (P0) get approved scope/provenance for upstream comparison; obtain source SHA/test fixture inventory, run exact golden parity; (P1) close CSV receipt/encoding/security gaps and replace unverified acceptance rows with measured results; (P2) Windows native CLI and one pinned PREP consumer adapter only after review; (P3) CI and packaging under explicit owner approval where billing/security may change. Do not claim 70% until acceptance matrix prerequisite evidence is satisfied.
+10. **Date/evidence/version:** 2026-11-12 KST. Verification: GitHub exact six file blobs, local Linux Node22.16.0 59/59, fresh ZIP 59/59, package check; code checkpoint `75a4e27257ddfc56014e4772eb54b4e8bdc59084`, docs baseline at this new handoff commit, final branch HEAD to resolve via GitHub.
+
+---
+
+## Historical handoff below (superseded where inconsistent)
+
 # PREP — TECHNICAL HANDOFF (10 mandatory sections)
 Updated: 2026-11-12 KST. Public-safe baseline only.
 
