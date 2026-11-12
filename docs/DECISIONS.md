@@ -1,3 +1,14 @@
+## D07 — Bounded deterministic parser vs unapproved streaming engine (2026-11-12)
+- A: stream every input, more complexity, harder reasoning about line and receipt consistency, potentially scales further.
+- B: fail closed above 2 MiB / 20,000 rows / 64 columns, parse in-memory, no third-party deps, easier testability; per-file memory bounded by explicit input and parsed objects.
+- Chosen B for initial CSV+JSON milestone: lower cost (0 paid API), simpler maintenance, sufficient bounded synthetic verification. No blanket high-volume performance guarantee.
+
+## D08 — Transfer/ownership and testing strategy (2026-11-12)
+- Wholesale upstream clone: smallest development effort but high license, secrets and host-coupling risk; rejected.
+- Selective upstream extraction with golden parity: favored for confirmed rights and behavior, still requires owner-approved scope/inventory.
+- Independent clean-room Node ESM core: implemented meanwhile on PRIVATE feature branch; avoids copying private source, costs more verification work. Golden parity is still outstanding, and P70 is not certified.
+- Evidence uses exact Git blob SHA of each locally executed code/test file, with Linux Node22.16 `59/59 PASS` and fresh ZIP 59/59. Integration/promotion/Windows unverified.
+
 # PREP — Engineering Decision Register
 Decisions as of 2026-11-12 KST. Public-safe summary only.
 
