@@ -1,5 +1,5 @@
 # PREP — Independent Architecture v1 (DESIGN)
-Date: 2026-11-12 KST. No source migration completed.
+Date: 2026-11-12 KST. No source migration completed. Product-level final blueprint: [FINAL_PRODUCT_BLUEPRINT.md](FINAL_PRODUCT_BLUEPRINT.md); acceptance tests: [ACCEPTANCE_MATRIX.md](ACCEPTANCE_MATRIX.md).
 
 ## Chosen approach
 A. Copy the existing product tree: quick to stage but leaks unrelated assets and couples code to a business-specific UI.
