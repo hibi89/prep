@@ -1,3 +1,17 @@
+# 2026-11-12 KST — PREP P85 global HOLD safeguard (LATEST / ten items)
+1. Goal: independent offline PREP R01–R12; P85 Linux SDK/evidence/HTML/security plus original contract review; no release.
+2. Done/decision: report/export-only error fixed. When dataset has global AMBIGUOUS_MAPPING, CSV rows now export effective REVIEW_REQUIRED + reason, HTML warns despite review_rows=0; underlying record data and CSV header unchanged. Chose targeted guard over breaking schema or mutating stored row state. Three regression tests and updated ambiguous goldens.
+3. Tests: exact code SHA 63cbf3dbe7d22010ed099862f7698d12cf0bc03f, four file blobs verified. Linux Node22.16 full npm test 136 PASS/0 FAIL/0 SKIP, network-disabled 136 PASS, npm check PASS. Fresh local 8907-byte runtime tarball SHA256 238ab334c84d8b9c31a0fc8a7ec60e9dd19d4b0c04eebb248616ff6daa475ba7; clean offline install, package SDK/report/main import and installed CLI CSV/receipt verify PASS. Full remote docs packing NOT_VERIFIED.
+4. State: P85 engineering functionality improved, but formal 85% NOT CERTIFIED; upstream parity prerequisite not certified, canonical percentage UNASSESSED; RELEASE HOLD.
+5. Errors/evidence/alternatives: previous CSV made global conflict rows look ready despite JSON HOLD. Minimal correction verified, no repeat failure. Original SMAX V8 parsing using real SHA256 and original validator 11/11 PASS; not native Node/upstream full integration. Hosted GitHub CI unrun due cost/approval and unavailable runner dispatch.
+6. Repo/branch/SHA: PRIVATE hibi89/prep feature/core-extraction; code SHA 63cbf3dbe7d22010ed099862f7698d12cf0bc03f, prior HEAD 9193edadee3af510953e92d3630f88ea7a94152a. Modified src/index.mjs, src/report.mjs and frozen golden test; added test/global-hold-export.test.mjs. SMAX upstream preprocessing 3830cb276f560d58e8181ba384d9cbe64815737c unchanged. Current docs HEAD after commit.
+7. OS/deploy: Linux Node22.16 local and network-disabled PASS. Original SMAX Node native, GitHub-hosted Actions, Windows/Node20/consumer NOT_RUN; Vercel/Production N/A.
+8. Originals/backup/security: private SMAX untouched, PREP main/develop untouched; synthetic-only, no customer inputs, secret, billing, visibility, licensing, paid service or publication. Git SHAs are rollback checkpoints, no history rewrite.
+9. Next/approval: choose independent-mode compatibility policy versus consented SMAX adapter; execute original pinned checkout in native Node only when available/approved; hosted runner use only with explicit authorization, full exact repo package, Windows and consumer in later gates. Do not call 85% certified until gates satisfied.
+10. Updated: 2026-11-12 KST. Native PREP 136/136, no-network 136/136, offline local package install, original SMAX isolated V8 validator 11/11. No native original/hosted CI. Documentation SHA after push.
+
+---
+
 # 2026-11-12 KST — P85 differential handoff (LATEST; ten items)
 1. Goal: standalone PREP R01–R12, P85 Linux/SDK/report/security/CI acceptance, RELEASE HOLD.
 2. Changes: 11 synthetic SMAX/PREP comparison snapshots (6 same value/review, 5 different), 12 PREP regressions, SHA-pinned read-only comparator for a separate SMAX checkout. No source migration.

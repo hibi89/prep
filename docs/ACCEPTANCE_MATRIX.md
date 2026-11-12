@@ -1,3 +1,11 @@
+## 2026-11-12 KST — P85 global export HOLD and V8 original validation (LATEST)
+- Exact PREP SHA 63cbf3dbe7d22010ed099862f7698d12cf0bc03f. R05/R06/R08 local PASS: global mapping conflict propagates effective REVIEW_REQUIRED and reason into CSV while HTML warns even if row review count is 0. Three regressions and intentionally updated ambiguous CSV/HTML hashes; normal exports unchanged.
+- Linux Node22.16 full npm test 136/136 PASS, 0 fail/skip; no-network namespace 136/136 PASS, syntax PASS. Fresh offline tarball SHA256 238ab334c84d8b9c31a0fc8a7ec60e9dd19d4b0c04eebb248616ff6daa475ba7 installed with main/SDK/report imports and installed CLI run+receipt verify PASS. Exact remote README/docs package NOT_VERIFIED.
+- Read-only original SMAX source in isolated V8 with SHA256 shim verified against known vectors and original validator + serializer: 11/11 inputs valid/source SHA correct. Six equal value/review states, five intentional differences. NOT original native Node/approved cross-repository golden parity, no source migration.
+- GitHub-hosted Actions NOT_DISPATCHED; Windows/consumer future. Formal 85% NOT CERTIFIED, final rate UNASSESSED; RELEASE HOLD.
+
+---
+
 ## 2026-11-12 KST — P85 differential evidence (LATEST)
 - Code SHA e41c57f23c4301eb5195c2c84e181ca9cf264761. Local PREP Linux Node22.16 native 133 PASS/0 FAIL/0 SKIP; network-isolated 133 PASS; syntax and npm pack dry-run PASS.
 - 11 synthetic original-SMAX core comparisons via isolated V8 + checksum stub: normalized value and review flag same for 6, different for 5. This is NOT native Node original-SMAX validated golden/receipt equivalence.

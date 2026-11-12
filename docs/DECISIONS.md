@@ -1,3 +1,10 @@
+## D15 — Preserve dataset HOLD in distributed CSV/HTML (2026-11-12 KST)
+- Alternative A: new unconditional dataset-status CSV column, or modifying normalized JSON row status, risks breaking consumers or mislabeling source-row state.
+- Alternative B: on global AMBIGUOUS_MAPPING only, keep source-row JSON untouched and CSV header fixed but emit effective REVIEW_REQUIRED with mapping reason in CSV and explicit static HTML banner. Chosen B, smallest safe backward-compatible correction. New regressions and intentional ambiguous golden updates.
+- Original SMAX isolated V8 comparator improved with verified SHA256 implementation; original validator/serializer and source SHA checks 11/11 PASS. Still not native Node original checkout, signer authenticity or permission for compatibility change. Linux 136/136 tests and offline fresh local pack PASS, hosted CI not run. RELEASE HOLD.
+
+---
+
 ## D14 — PREP-SMAX read-only comparison (2026-11-12 KST)
 - A: copy original SMAX generic source into PREP tests. Lower initial setup cost but source-rights, disclosure and coupling risks; not approved.
 - B: use synthetic-only reference observations plus an opt-in SHA-pinned separate local SMAX checkout comparator. Zero source copied to PREP and no cloud cost; native comparison remains blocked until authorized private checkout is present. Chosen B.
