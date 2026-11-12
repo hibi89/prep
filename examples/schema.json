@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "fields": [
+    { "name": "date", "source": "Date", "type": "date", "required": true },
+    { "name": "amount", "source": "Amount", "type": "decimal", "required": true },
+    { "name": "approved", "source": "Approved", "type": "boolean" },
+    { "name": "note", "source": "Note", "type": "text" }
+  ]
+}
