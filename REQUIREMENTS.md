@@ -1,6 +1,8 @@
 # PREP — FINAL PRODUCT REQUIREMENTS v1.0 (planning baseline)
 Baseline date: 2026-11-12 KST. Status: DESIGN / NOT SHIPPED.
 
+**Product-level final design:** [docs/FINAL_PRODUCT_BLUEPRINT.md](docs/FINAL_PRODUCT_BLUEPRINT.md). **Evidence-based release criteria:** [docs/ACCEPTANCE_MATRIX.md](docs/ACCEPTANCE_MATRIX.md). R01–R12 here define the mandatory v1.0 requirements; unapproved optional features must not silently change the 100% denominator. Owner must confirm any material scope change before implementation.
+
 ## Goal
 Deliver a standalone, locally installed, verifiable, reusable data-preparation engine that turns explicitly selected structured datasets into normalized, traceable, reviewable outputs for independent downstream software.
 
