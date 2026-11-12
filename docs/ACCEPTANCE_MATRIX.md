@@ -1,3 +1,10 @@
+## 2026-11-12 KST — P85 SHA-bound runtime and security evidence
+- Candidate code SHA 9a7e6f6cc69632158211587d87a0a6c09da674ce, PRIVATE PREP feature/core-extraction; tested locally from exact matching Git blobs.
+- R04/R05/R07/R08: MAPPED and UNMAPPED formula risk detects hidden Unicode; JSON result checksum covers records/review/status/mapping; optional CSV/HTML sidecar binds exported bytes to source receipt. Non-overwrite tests, paired-output cleanup and tamper negatives PASS. Sidecar pair can be partial after crash; digest is not an authenticated issuer signature.
+- R01/R10/R11: Linux Node22.16 native npm test 104/104 PASS, FAIL0 SKIP0, npm run check PASS, no-network Linux namespace 104/104 PASS; local runtime tarball freshly installed offline with main/SDK/report import, CLI and CSV+receipt verify PASS. GitHub-hosted workflow NOT DISPATCHED, full exact GitHub package including docs and Windows native NOT RUN.
+- Rights and SMAX golden parity remain pending: original SMAX generic CSV source blob 3b6cedae4869b7d8d5ae587f8d565812b6d9e193. Six static cross-contract PREP assertions confirm date/decimal/boolean/integer differences but do not run SMAX original executable golden comparison. No drop-in compatibility claim.
+- **Formal P70/P85 gates NOT CERTIFIED; canonical PREP completion UNASSESSED. RELEASE HOLD.** No production, paid runner usage, private code copying, or scope change.
+---
 ## 2026-11-12 KST — P85 additional SHA-bound verification
 - Exact implementation commit: 07255335dc3b6de4f9c8c3e8bacdf06c87d4eb0e, private feature/core-extraction.
 - R01/R12 PARTIAL: ESM package SDK self-reference and fresh local offline CLI/main/report install smoke PASS; published SDK and approved external consumer NOT_RUN.

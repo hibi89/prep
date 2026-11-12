@@ -1,3 +1,9 @@
+## D12 — P85 receipt strategy and Unicode security (2026-11-12 KST)
+- A: mandatory automatic sidecar with each CSV/HTML export, simpler to force proof but breaking existing single-file callers and recovery assumptions. B: opt-in explicit receiptOutput and CLI flag, new-only paired staging with rollback. **B chosen** for additive backward compatibility and zero paid API cost. OS process crash may leave one of two files; a consumer must verify both.
+- Source-only SHA could not detect changes to normalized JSON records. Add result_sha256 over records/review queue/mapping/status and verifyResult, while preserving historic source-only receipt verification. These are checksums, not issuer authentication.
+- C1 controls, Default_Ignorable_Code_Point and formula characters must be reviewed before CSV export; also flag formula in unmapped fields without dropping rows. Synthetic tests 104/104 PASS on Linux Node22; network-disabled repeat 104/104 PASS.
+- No automatic SMAX migration, source rights change, commercial license publication or private runner dispatch; upstream contract differences documented separately.
+---
 ## D11 — Local Linux verification and package allowlisting (2026-11-12 KST)
 - Option A, manually dispatch GitHub Actions: exact remote CI evidence, but runner spend/owner approval required; NOT DISPATCHED. Option B, reconstruct exact GitHub blob SHA files locally, run native Node22 full suite and network-disabled namespace plus offline package smoke: no paid usage, repeatable, does not replace hosted CI/Windows. **Chosen B**.
 - Package option A, .npmignore blacklist: easy, but could miss new temporary archives. Package option B, package.json files allowlist: equally low cost and safer against untracked scripts/archive leakage. **Chosen B**, with src/bin/examples/SDK contract included.

@@ -1,3 +1,10 @@
+## 2026-11-12 P85 optional verified export and result integrity addendum
+- Additive API: runLocal({input, config, output, format?, receiptOutput?}); CLI run --receipt-output FILE optionally writes a CSV or HTML file and a checksum-only PREP_EXPORT_V1 JSON sidecar. Old runLocal without receiptOutput produces only the requested file; JSON output includes full data envelope.
+- CLI verify --source SOURCE --receipt SIDECAR --export EXPORTED validates BOTH source and export SHA-256 checksums and the enclosed receipt checksum; a mismatched source, missing export or corrupted sidecar fails closed.
+- SDK makeExportReceipt, verifyExport and verifyResult are pre-release. New JSON result receipts include result_sha256 binding rows, review queue, mapping suggestions and status; newer JSON CLI verify rejects content tampering. Previous source-only receipt files remain verifiable but cannot prove unchanged normalized result content.
+- Files are created with new-only staging/link; a process crash can leave an incomplete output/sidecar pair, so reject incomplete pairs. No two-file crash atomicity, digital signature, client authenticity, or authorization.
+- PREP text CSV exports guard Unicode-hidden formula characters. SMAX differences remain intentional/unapproved for compatibility; no drop-in migration. Native Linux Node22 suite 104 PASS, GitHub Actions/Windows/consumer and upstream golden parity NOT VERIFIED, RELEASE HOLD.
+
 # PREP SDK contract — 85% development candidate
 
 - Package: `@private/prep-engine` v0.1.0, private pre-release; Node.js 20+ ESM only.
