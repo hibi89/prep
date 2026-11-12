@@ -14,7 +14,7 @@ D04 — Data/AI boundary
 Decision: deterministic offline rules as core; model-based suggestions optional, explicitly approved and never an automatic authority. No mandatory paid API.
 
 D05 — Repository visibility
-Observed reality: NEW destination PUBLIC. Intended private source requires PRIVATE destination. No visibility change without user approval; no transfer in the interim.
+Historical reality: new destination was PUBLIC at creation. The owner changed it to **PRIVATE** on 2026-11-12 KST and GitHub metadata confirms that status. Visibility gate satisfied; code migration remains dependent on rights, source inventory, rollback and regression review.
 
 D06 — Release policy
 No automatic license publication, paid service, external upload or production release. Exact code SHA and native cross-platform test evidence required.
