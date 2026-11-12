@@ -1,0 +1,11 @@
+{
+  "name": "@private/prep-engine",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Offline deterministic structured-data preparation engine (development candidate)",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "exports": { ".": "./src/index.mjs" },
+  "bin": { "prep": "./bin/prep.mjs" },
+  "scripts": { "test": "node --test test/*.test.mjs", "check": "node --check src/index.mjs && node --check bin/prep.mjs" }
+}
