@@ -1,3 +1,26 @@
+## 2026-11-12 — P70 candidate evidence (feature branch; no release acceptance yet)
+
+| Requirement | Current technical evidence | Gate |
+|---|---|---|
+| R01 CLI/ESM | `inspect/run/verify` and package dry-run; Node22 process E2E | PARTIAL: fresh published install untested |
+| R02 CSV/JSON | strict UTF-8, CSV quoting, JSON array, 2 MiB/20k/64 limits; symlink denial | LOCAL PASS; Windows NOT_RUN |
+| R03 normalization | date/leap, exact decimal, signed 64-bit integer strings, boolean/text | LOCAL PASS |
+| R04 quality | missing, malformed type, exact duplicates, formulas, unmapped fields, hidden controls | LOCAL PASS |
+| R05 review | row/line reason codes retained, no automatic row deletion | LOCAL PASS |
+| R06 mapping | suggestions only, explicit source contract, conflicting candidate REVIEW_REQUIRED | LOCAL PASS; UI NOT_APPLICABLE |
+| R07 evidence | input SHA and receipt rehash; tamper/mismatch negative tests | LOCAL PASS; not an authenticity signature |
+| R08 export | new-file JSON/CSV, no overwrite, atomic hardlink publication | LOCAL PASS; CSV receipt/HTML not complete |
+| R09 bounds | row/column/byte refusals and 20k-row synthetic benchmark | PARTIAL: broader denial-of-service metrics pending |
+| R10 offline config | strict config, no third-party dependencies or mandatory API | LOCAL PASS; controlled no-network audit NOT_RUN |
+| R11 tests | 59/59 Node22 Linux and fresh ZIP extraction, exact Git blob SHA | PARTIAL: GitHub CI and Windows NOT_RUN |
+| R12 consumer | no authorized downstream adapter | NOT_RUN |
+
+**Certification result: NOT 70%.** The prior 50%-gate original SMAX golden parity/source-rights/migration baseline is not complete. This is a *functional development candidate*, not an independent commercial product or full R01–R12 acceptance.
+
+Test commands: `npm test`, `npm run check`, `npm pack --dry-run --json`; platform Linux x86_64 Node22.16.0. Source checkpoint `75a4e27257ddfc56014e4772eb54b4e8bdc59084`, local Git blob hashes listed in STATUS. Synthetic 20,000-row 277,783-byte processing: 20,000 output records / 0 review, about 68ms on one run; not a contractual benchmark.
+
+---
+
 # PREP — Product Acceptance Matrix v1.0
 **Date:** 2026-11-12 KST. **Status:** Proposed verification plan; NO tests executed in the new repository. This document defines evidence required before saying a feature or product is complete.
 
