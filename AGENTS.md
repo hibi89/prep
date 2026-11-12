@@ -8,7 +8,7 @@ Updated: 2026-11-12 KST. Applies to all branches and AI collaborators.
 - A user message "ㄱ" means continue the next approved and safe unit of work; it does not override privacy, cost, permissions, or release gates.
 
 ## Hard controls
-1. Never copy source from a private repository into a public one. This repository is presently PUBLIC. Keep all content in this repository public-safe until visibility and distribution rights are explicitly resolved.
+1. Never copy private source into a public destination. This repository was confirmed **PRIVATE on 2026-11-12 KST** following the owner's settings change. That removes the visibility blocker, **not** the source-rights, secret-scanning, backup or equivalence-verification requirements.
 2. Never commit secrets, .env files, private documents, customer data, tokens, credentials, model weights or licensed third-party datasets. Do not log raw rows or sensitive paths by default.
 3. Do not change source repository content, Git history, GitHub privacy, branch protection, integrations, secrets, costs, domains or production deployment without explicit authorization.
 4. Adopt an independent, local-first, deterministic core. No mandatory LLM, cloud upload, internet requirement, credential passthrough, automatic approval or destructive writes.
@@ -28,4 +28,4 @@ Updated: 2026-11-12 KST. Applies to all branches and AI collaborators.
 - Release only after verified CLI/SDK, security, Windows/Linux and downstream integration tests, and explicit owner approval.
 
 ## Scope boundaries
-PREP owns reusable preprocessing contracts and quality. Consumers own their workflow/UI/business adapters. The upstream private project remains unmodified. Do not copy or publish private source while this repository is public.
+PREP owns reusable preprocessing contracts and quality. Consumers own their workflow/UI/business adapters. The upstream private project remains unmodified. Keep destination PRIVATE during any authorized selective source migration; never publish or transfer private source to a public remote.
