@@ -19,6 +19,10 @@ export function renderHTML(result, config) {
   const issues = result.review_queue.slice(0, REPORT_PREVIEW_LIMIT).map(r =>
     `<tr>${cell(r.record)}${cell(r.source_line)}${cell(r.code)}${cell(r.field)}</tr>`
   ).join('\n');
+  const globalHold = result.review_queue.some(item => item.code === 'AMBIGUOUS_MAPPING');
+  const holdNotice = globalHold
+    ? '<p><strong>DATASET REVIEW REQUIRED:</strong> Mapping candidates are ambiguous. No rows are approved, even if Review rows is 0.</p>'
+    : '';
   const counts = [['Input rows', receipt.input_rows], ['Output rows', receipt.output_rows],
     ['Review rows', receipt.review_rows], ['Approval', receipt.approval],
     ['Execution', receipt.execution], ['Transform version', receipt.transform_version],
@@ -27,7 +31,7 @@ export function renderHTML(result, config) {
     '<meta http-equiv="Content-Security-Policy" content="default-src &#39;none&#39;; script-src &#39;none&#39;; style-src &#39;none&#39;; img-src &#39;none&#39;; form-action &#39;none&#39;; base-uri &#39;none&#39;">' +
     '<meta name="referrer" content="no-referrer"><title>PREP review report</title></head><body>' +
     '<h1>PREP review report</h1><p>Local static report. Not an approval, signature or source authenticity certificate.</p>' +
-    `<h2>Summary</h2><dl>${counts.map(([k,v])=>`<dt>${escapeHTML(k)}</dt><dd>${escapeHTML(v)}</dd>`).join('')}</dl>` +
+    `${holdNotice}<h2>Summary</h2><dl>${counts.map(([k,v])=>`<dt>${escapeHTML(k)}</dt><dd>${escapeHTML(v)}</dd>`).join('')}</dl>` +
     `<h2>Records (first ${REPORT_PREVIEW_LIMIT} maximum)</h2><table><thead><tr>${heading('Source record')}${heading('Status')}${cols.map(heading).join('')}${heading('Reasons')}</tr></thead><tbody>${previews}</tbody></table>` +
     `<h2>Review queue (first ${REPORT_PREVIEW_LIMIT} maximum)</h2><table><thead><tr>${['Record','Line','Reason','Field'].map(heading).join('')}</tr></thead><tbody>${issues}</tbody></table>` +
     `<p>Rows and review items beyond the preview limit are omitted from this HTML preview, not the source result.</p></body></html>\n`;

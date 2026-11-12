@@ -260,7 +260,13 @@ export function renderCSV(result, config) {
   const fields = validateConfig(config).fields;
   const names = [...fields.map(f => f.name), '__source_record', '__status', '__reasons'];
   const lines = [names.map(n => escapeCSV(n, true)).join(',')];
-  for (const r of result.records) lines.push([...fields.map(f => escapeCSV(r.data[f.name], f.type === 'text')), escapeCSV(r.source_record, false), escapeCSV(r.status, true), escapeCSV(r.reasons.join('|'), true)].join(','));
+  // A dataset-level alias collision must remain visible in every exported CSV row.
+  const globalHold = result.review_queue.some(item => item.code === 'AMBIGUOUS_MAPPING');
+  for (const r of result.records) {
+    const status = globalHold ? 'REVIEW_REQUIRED' : r.status;
+    const reasons = globalHold ? [...new Set([...r.reasons, 'AMBIGUOUS_MAPPING'])] : r.reasons;
+    lines.push([...fields.map(f => escapeCSV(r.data[f.name], f.type === 'text')), escapeCSV(r.source_record, false), escapeCSV(status, true), escapeCSV(reasons.join('|'), true)].join(','));
+  }
   return lines.join('\r\n') + '\r\n';
 }
 
