@@ -23,7 +23,7 @@
 - Release packaging must be validated from a **fresh environment**, not only developer checkout.
 - Upstream private source remains unchanged. Preserve pre-migration SHA/backup privately and verify parity before switching a consumer to PREP.
 - No unverified production deployment, financial transactions, paid calls, secrets or permissions changes.
-- New repo is currently PUBLIC: private source migration is blocked until explicitly authorized privacy/rights remediation.
+- Destination repo is now **PRIVATE (owner change verified 2026-11-12 KST)**; rights, source inventory, backup, and goldens still gate transfer. Code migration has not been executed.
 
 ## Acceptance procedure
 1. Map implementation branch + exact SHA to each R01–R12 row.
