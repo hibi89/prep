@@ -5,8 +5,9 @@ Checked: 2026-11-12 KST. Verification scope: connected GitHub repository metadat
 |---|---|---|
 | Repository | VERIFIED | hibi89/prep, default branch main |
 | Visibility | PUBLIC — SECURITY GATE | Private upstream source cannot be transferred here |
-| Initial docs | VERIFIED | 16 public-safe files committed; sampled remote files verified at documentation baseline 46549bbe30e1bbb4cbdc90b5131cb912e765f64d |
+| Initial docs | VERIFIED | Initial 16 public-safe files committed at baseline 46549bbe30e1bbb4cbdc90b5131cb912e765f64d; subsequent final-design docs added |
 | main / develop / feature branch | VERIFIED | main, develop, feature/core-extraction returned by GitHub; initially forked from docs baseline |
+| Final product design | DOCUMENTED / OWNER REVIEW | docs/FINAL_PRODUCT_BLUEPRINT.md and docs/ACCEPTANCE_MATRIX.md specify R01–R12, user journey, acceptance and 100% gate; not implemented |
 | Independent PREP runtime | NOT MIGRATED | No standalone source copied |
 | Full code/test suite | NOT RUN | No app baseline in new repo |
 | CI | NOT CONFIGURED | No Actions workflow implied |
@@ -14,6 +15,11 @@ Checked: 2026-11-12 KST. Verification scope: connected GitHub repository metadat
 | Deployment / commercial release | NOT APPLICABLE / HOLD | No production URL, no license decision |
 | PREP standalone completion | NOT SCORED | Cannot inherit upstream product's 50% |
 | Private original | UNCHANGED | Read-only examination only; no migration performed |
+
+## 2026-11-12 product design inspection
+- Earlier REQUIREMENTS/ARCHITECTURE/ROADMAP stated high-level design, but lacked a granular user flow, contract details and R01–R12 acceptance evidence.
+- Added detailed final-product blueprint and acceptance matrix. Documentation is now explicit; final owner scope signoff and source implementation are separate.
+- Verified source migration remains blocked while destination is PUBLIC; no source, tests, private fixtures, paid services or deployment were changed.
 
 ## Immediate next steps
 P0: Confirm whether owner wants repo PRIVATE; do not silently alter security settings. Confirm source-license/rights boundaries.
