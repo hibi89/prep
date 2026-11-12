@@ -4,8 +4,19 @@
   "private": true,
   "description": "Offline deterministic structured-data preparation engine (development candidate)",
   "type": "module",
-  "engines": { "node": ">=20" },
-  "exports": { ".": "./src/index.mjs" },
-  "bin": { "prep": "./bin/prep.mjs" },
-  "scripts": { "test": "node --test test/*.test.mjs", "check": "node --check src/index.mjs && node --check bin/prep.mjs" }
+  "engines": {
+    "node": ">=20"
+  },
+  "exports": {
+    ".": "./src/index.mjs",
+    "./sdk": "./src/sdk.mjs",
+    "./report": "./src/report.mjs"
+  },
+  "bin": {
+    "prep": "./bin/prep.mjs"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "check": "node --check src/index.mjs && node --check src/report.mjs && node --check src/sdk.mjs && node --check bin/prep.mjs"
+  }
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { readLocalFile, runLocal, verifyReceipt, parseCSV, parseJSON, PrepError } from '../src/index.mjs';
 const args = process.argv.slice(2);
-const usage = 'prep inspect --input FILE [--format csv|json] | run --input FILE --config FILE --output FILE [--format csv|json] | verify --source FILE --receipt FILE';
+const usage = 'prep inspect --input FILE [--format csv|json] | run --input FILE --config FILE --output FILE(.json|.csv|.html) [--format csv|json] | verify --source FILE --receipt FILE';
 const fail = code => { throw new PrepError(code); };
 const main = async () => {
   if (args.length === 0 || args[0] === '--help') return { usage };

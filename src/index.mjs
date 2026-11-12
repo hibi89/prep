@@ -1,3 +1,5 @@
+import { renderHTML } from './report.mjs';
+export { renderHTML } from './report.mjs';
 import { createHash } from 'node:crypto';
 import { open, lstat, link, unlink, mkdtemp, rmdir } from 'node:fs/promises';
 import { constants } from 'node:fs';
@@ -229,7 +231,7 @@ export async function runLocal({ input, config, output, format }) {
   let options; try { options = JSON.parse(configText); } catch { fail('INVALID_CONFIG_JSON'); }
   const kind = format || (/\.json$/i.test(input) ? 'json' : /\.csv$/i.test(input) ? 'csv' : fail('UNSUPPORTED_FORMAT'));
   const result = prepareDataset(bytes, kind, options);
-  const content = /\.csv$/i.test(output) ? renderCSV(result, options) : /\.json$/i.test(output) ? JSON.stringify(result, null, 2) + '\n' : fail('UNSUPPORTED_OUTPUT_FORMAT');
+  const content = /\.csv$/i.test(output) ? renderCSV(result, options) : /\.json$/i.test(output) ? JSON.stringify(result, null, 2) + '\n' : /\.html?$/i.test(output) ? renderHTML(result, options) : fail('UNSUPPORTED_OUTPUT_FORMAT');
   await saveNewFile(output, content);
   return { status: result.status, rows: result.receipt.input_rows, review_rows: result.receipt.review_rows, source_sha256: result.receipt.source_sha256 };
 }
