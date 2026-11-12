@@ -1,3 +1,12 @@
+## 2026-11-12 KST — P85 additional SHA-bound verification
+- Exact implementation commit: 07255335dc3b6de4f9c8c3e8bacdf06c87d4eb0e, private feature/core-extraction.
+- R01/R12 PARTIAL: ESM package SDK self-reference and fresh local offline CLI/main/report install smoke PASS; published SDK and approved external consumer NOT_RUN.
+- R02/R04/R07/R08 PARTIAL: six added XSS/prototype/CSV-formula/no-overwrite/invalid-UTF8 safety regressions PASS; CSV has no standalone receipt, JSON receipt is not an authenticity signature.
+- R09/R10/R11 PARTIAL: Linux Node22.16.0 npm test **75/75 PASS**, fail0 skip0, npm run check PASS; separate network-disabled namespace **75/75 PASS**; npm pack dry-run and local offline tarball import/CLI smoke PASS. This is NOT a hosted GitHub Actions run, Windows native test, full remote-tarball audit, or downstream adapter E2E.
+- P70/P85 formal gates NOT CERTIFIED due SMAX contractual parity/rights golden review, CSV evidence and unrun hosted CI. RELEASE HOLD.
+
+---
+
 ## 2026-11-12 KST — P85 partial implementation evidence (supersedes prior snapshot for new code)
 - R08 **partial implementation**: HTML static report with escape/CSP and bounded 200-row preview added, 6/6 local module tests at exact Git blob hash PASS. New CLI HTML E2E **NOT_RUN**; HTML not complete signed/authoritative evidence.
 - R01/R12 **partial**: `./sdk` preview package export exists, no published package/consumer acceptance, contract not stable; R12 **NOT_RUN**.

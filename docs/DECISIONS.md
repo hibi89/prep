@@ -1,3 +1,10 @@
+## D11 — Local Linux verification and package allowlisting (2026-11-12 KST)
+- Option A, manually dispatch GitHub Actions: exact remote CI evidence, but runner spend/owner approval required; NOT DISPATCHED. Option B, reconstruct exact GitHub blob SHA files locally, run native Node22 full suite and network-disabled namespace plus offline package smoke: no paid usage, repeatable, does not replace hosted CI/Windows. **Chosen B**.
+- Package option A, .npmignore blacklist: easy, but could miss new temporary archives. Package option B, package.json files allowlist: equally low cost and safer against untracked scripts/archive leakage. **Chosen B**, with src/bin/examples/SDK contract included.
+- Candidate code SHA 07255335dc3b6de4f9c8c3e8bacdf06c87d4eb0e, new synthetic 6-case security test blob 80e31980725e54b154d6ce81a54670a7ffe78de7, package blob 4ddbdae0328ff6e58d582aa11532d65fa2893557. Linux native 75/75, Linux no-network 75/75, npm syntax and package smoke PASS. Not a product completion certification.
+
+---
+
 ## D10 — P85 report/SDK versus direct SMAX coupling (2026-11-12 KST)
 - Option A: import or copy SMAX data/formatter, potentially faster feature reuse but differing date/decimal/boolean contracts and rights, high dependency/regression risk; no budget advantage for offline local deterministic work.
 - Option B: retain PREP clean-room core and add narrow HTML reporter plus preview SDK facade, zero paid calls and minimal coupling; slightly more test/contract work but maintainable independent versioning.
