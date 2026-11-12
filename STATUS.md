@@ -1,3 +1,12 @@
+## 2026-11-12 KST — P70 candidate regression hardening (current, supersedes prior 59-test snapshot)
+- **Confirmed corrected GitHub source and tests** on PRIVATE `feature/core-extraction`: source blob `a9285b06c08a2483565c48eb19ebaca175ae405a`, test blob `a8831717eb90e1e2f9ce57e663c3f0e6181272c1`; exact locally executed files match both hashes. Code checkpoint `9e10a96f9870d1bf90b64a2ef07ca8b85200d8d7` (documentation commits may advance branch HEAD).
+- **Native Node22.16.0 Linux `npm test`: 61 PASS / 0 FAIL / 0 SKIP**; independent freshly extracted ZIP `npm test`: 61 PASS / 0 FAIL / 0 SKIP; `npm run check` and `npm pack --dry-run --json` PASS. ZIP SHA256 `3bb112b7a12d3d2019e5239fdeb6f1dd32b3d89c6bd935d036107c453471fb85`; ZIP is temporary delivery, GitHub is implementation source of truth.
+- **Resolved correctness bug:** exact duplicate identity uses all original input columns, **not** normalized mapped values alone. Regression tests show two input rows that differ only in an unmapped column are not falsely marked duplicates, while truly identical raw rows are.
+- **Read-only upstream comparison:** `hibi89/SMAX@preprocessing/preprocessing/generic-csv.mjs` current blob `3b6cedae4869b7d8d5ae587f8d565812b6d9e193`; confirmed distinct date separators/compact date rules, comma-grouped decimal/trailing-zero conventions, boolean locale and evidence/reason-code schemas. **Full behavior parity NOT ACHIEVED**. No upstream source was copied or modified.
+- **Assessment:** local independent **P70 functionality candidate**; 70% **final-product certification NOT achieved / canonical rate UNASSESSED** until approved upstream rights/provenance and golden cross-comparison; Windows/CI/customer/consumer tests remain NOT_RUN. Release HOLD. The below 59/59 evidence is an earlier checkpoint.
+
+---
+
 ## 2026-11-12 KST — P70 engineering candidate (current; supersedes documentation-only status below)
 
 - **Implementation exists in PRIVATE GitHub** on `feature/core-extraction`; no upstream SMAX code copied and the upstream repository/consumers are unchanged. The six files `src/index.mjs`, `bin/prep.mjs`, `package.json`, `test/prep.test.mjs`, `examples/schema.json`, `examples/synthetic.csv` were individually fetched and Git blob SHA-matched against the exact local tested source.
