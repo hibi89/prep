@@ -1,3 +1,10 @@
+## 2026-11-12 KST — P85 JSON data-loss and metadata-spoofing gate (LATEST)
+- Commit 7b6a90b067c72165438b2ed9b3b5c328a9330a53 exact Git source and new test blob verified. R02/R04/R08/R09: v1 JSON now detects duplicate keys within one flat record before JSON.parse can silently overwrite an earlier value (including escaped equivalents), FAIL CLOSED DUPLICATE_JSON_KEY; repeated names in separate records still valid. R08 export status namespace __status/__reasons/__source_record cannot be mapped as user field (including NFKC/case aliases): INVALID_SCHEMA_FIELD. Normal export header layout unchanged.
+- Linux Node22.16 x86_64 npm test **148 PASS, 0 FAIL, 0 SKIP**, network-isolated Linux full **148 PASS**, npm run check PASS; package dry-run PASS. Fresh locally packed 7-file 9366-byte tarball SHA256 e8f82a3931b19239b22b4036dae082f1208a6e16dfc5cff21192819ca48ee9c0 offline installation SDK/report and CLI CSV/receipt E2E PASS; local packaging lacks full docs.
+- Last original SMAX V8 core with real SHA and original validator 11/11 PASS is limited semantic/source-byte evidence, **NOT native original SMAX checkout or executed cross-repo Node golden parity**. GitHub hosted workflow, Windows/Node20 and approved downstream adapter NOT_RUN. Formal 85% NOT CERTIFIED; product score UNASSESSED, RELEASE HOLD.
+
+---
+
 ## 2026-11-12 KST — P85 global export HOLD and V8 original validation (LATEST)
 - Exact PREP SHA 63cbf3dbe7d22010ed099862f7698d12cf0bc03f. R05/R06/R08 local PASS: global mapping conflict propagates effective REVIEW_REQUIRED and reason into CSV while HTML warns even if row review count is 0. Three regressions and intentionally updated ambiguous CSV/HTML hashes; normal exports unchanged.
 - Linux Node22.16 full npm test 136/136 PASS, 0 fail/skip; no-network namespace 136/136 PASS, syntax PASS. Fresh offline tarball SHA256 238ab334c84d8b9c31a0fc8a7ec60e9dd19d4b0c04eebb248616ff6daa475ba7 installed with main/SDK/report imports and installed CLI run+receipt verify PASS. Exact remote README/docs package NOT_VERIFIED.

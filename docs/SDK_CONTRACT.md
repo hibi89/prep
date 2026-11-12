@@ -1,3 +1,8 @@
+## 2026-11-12 P85 data integrity contract addendum
+- parseJSON and runLocal now reject an object with duplicated property names rather than silently keeping the last occurrence; Unicode escape-equivalent property keys are also duplicates. Stable error: DUPLICATE_JSON_KEY. Identical property names in different source records are allowed.
+- The names __source_record, __status, __reasons (case-folded/NFKC equivalents) are reserved for PREP CSV evidence columns and are invalid config.fields[].name: INVALID_SCHEMA_FIELD. No auto-rename, and all other CSV columns/status semantics unchanged. These are safety restrictions on an unreleased SDK.
+- Linux Node22.16 tests 148/148 PASS (native and network-disabled); fresh 7-file local runtime archive installed offline and CLI receipt verified. GitHub hosted CI, actual upstream Node parity, Node20/Windows/approved consumer and full docs packaging remain unverified; RELEASE HOLD.
+
 ## 2026-11-12 P85 strict mapping/limits contract update
 - Global alias conflicts (for example both source headers Name and name with explicit distinct fields) produce dataset status REVIEW_REQUIRED and AMBIGUOUS_MAPPING review queue entries with record/source_line = null; actual row data remains explicitly mapped and untouched. receipt.review_rows counts row defects only, not global mapping conflicts. Consumers **must** check overall status.
 - CSV with only a header cannot yield a falsely READY run: EMPTY_SOURCE_ROWS. Unknown schema-field options fail INVALID_SCHEMA_FIELD, wrong direct parseJSON input type INVALID_JSON. Direct parseCSV and parseJSON reject UTF-8 input over 2MiB with INPUT_LIMIT. Quoted bare CR and CRLF advance CSV source line provenance correctly.

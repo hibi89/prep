@@ -1,3 +1,10 @@
+## D16 — JSON duplicate key denial and reserved CSV metadata names (2026-11-12 KST)
+- Duplicate JSON key alternatives: (A) allow default JSON.parse last-wins silently, data loss risk and untraceable provenance; (B) reject duplicated decoded keys within each flat record before normalization and receipt. **Chosen B**, linear bounded scan, exact+Unicode-escaped duplicates blocked; preserves repeated keys across distinct rows.
+- Metadata collision alternatives: (A) auto-rename reserved user fields, potentially changing mapping and reviewer expectations; (B) explicitly refuse field names that case-fold/NFKC to __source_record, __status or __reasons. **Chosen B**, preserves CSV fixed header contract and avoids status spoofing.
+- Costs: no API or hosted CI minutes. Maintenance: scanner is limited to v1 top-level array of flat record objects, complete JSON.parse validation still authoritative. 12 new regressions, 148 native Linux and 148 network-disabled tests PASS; full hosted CI and SMAX Node equivalence remain open.
+
+---
+
 ## D15 — Preserve dataset HOLD in distributed CSV/HTML (2026-11-12 KST)
 - Alternative A: new unconditional dataset-status CSV column, or modifying normalized JSON row status, risks breaking consumers or mislabeling source-row state.
 - Alternative B: on global AMBIGUOUS_MAPPING only, keep source-row JSON untouched and CSV header fixed but emit effective REVIEW_REQUIRED with mapping reason in CSV and explicit static HTML banner. Chosen B, smallest safe backward-compatible correction. New regressions and intentional ambiguous golden updates.
