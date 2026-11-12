@@ -1,5 +1,5 @@
 # PREP — Evidence-based Roadmap
-Date: 2026-11-12 KST. Milestones are *acceptance thresholds*, not reported progress.
+Date: 2026-11-12 KST. Milestones are *acceptance thresholds*, not reported progress. The final product definition is [FINAL_PRODUCT_BLUEPRINT.md](FINAL_PRODUCT_BLUEPRINT.md); exact evidence and fail cases are in [ACCEPTANCE_MATRIX.md](ACCEPTANCE_MATRIX.md).
 
 | Stage | Target proof | Release |
 |---|---|---|
