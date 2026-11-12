@@ -1,5 +1,5 @@
 # PREP — Private-source Migration & Recovery Plan
-Date: 2026-11-12 KST. State: BLOCKED ON VISIBILITY / RIGHTS; NOT EXECUTED.
+Date: 2026-11-12 KST. State: **PRIVATE VERIFIED; RIGHTS/INVENTORY/COMPARISON PENDING; NOT EXECUTED**. Prior Public security gate resolved by owner.
 
 ## Decision
 Two options assessed:
@@ -7,9 +7,9 @@ Two options assessed:
 - Selective extraction: inventory reusable parser, schema, quality, provenance and tests, isolate source dependencies, then verify identical results. **Chosen** for lower long-term maintenance and security risk.
 
 ## Preconditions
-1. Confirm this repository is PRIVATE if moving unpublished private source. Current observed visibility: PUBLIC. The assistant **must not** silently change visibility.
+1. **DONE:** GitHub confirmed this destination is PRIVATE after the owner changed visibility on 2026-11-12 KST. Do not change visibility again without approval.
 2. Explicit owner authorization for private source transfer, and license/IP review for external dependencies and any later publishing.
-3. Snapshot original upstream branch SHA, relevant blob hashes, exact file inventory and golden expected results in an approved private destination (not in this public documentation).
+3. Snapshot original upstream branch SHA, relevant blob hashes, exact file inventory and golden expected results in the approved PRIVATE destination; do not record sensitive source data in public-facing reports.
 4. Confirm existing upstream source, tests and customer data remain immutable; document rollback using original SHAs.
 
 ## Extraction procedure (only after preconditions)
@@ -26,4 +26,4 @@ Two options assessed:
 - Do not force push, rewrite history, auto-sync private source to public remotes or claim success from isolated test doubles.
 
 ## Remaining approval
-Owner must explicitly approve making the destination PRIVATE, or instead explicitly elect a public clean-room design with no copied private source. That choice affects all subsequent development and release actions.
+**PRIVATE visibility is now verified.** Remaining checkpoints: owner-approved extraction scope, provenance and license/IP review, upstream source SHA inventory, dependency/fixture redaction, rollback and parity tests. Do not publish, deploy or change access settings automatically.
