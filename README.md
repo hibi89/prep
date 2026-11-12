@@ -12,6 +12,11 @@ PREP is an independently versioned, **local-first, deterministic data preparatio
 - Expose a versioned CLI and library contract reusable by multiple products.
 - Default to **zero mandatory paid API/LLM calls** and no customer-data network transmission.
 
+## Final product design and acceptance baseline
+- [Detailed final product blueprint](docs/FINAL_PRODUCT_BLUEPRINT.md) — user journey, modules, data flow, source/output boundaries and 100% definition.
+- [R01–R12 acceptance matrix](docs/ACCEPTANCE_MATRIX.md) — positive/negative tests and exact release evidence.
+- [Requirement IDs](REQUIREMENTS.md) — scope and required features; owner approval is still required for scope changes.
+
 ## V1 target, not a release claim
 1. CSV and JSON ingest, explicit schemas and safe column-mapping suggestions.
 2. Type and quality checks, duplicate/missing/error review queues, bounded resource use.
@@ -39,10 +44,12 @@ Feature branches merge via review and checks; no force-push or unauthorized publ
 2. [STATUS.md](STATUS.md)
 3. [AGENTS.md](AGENTS.md)
 4. [REQUIREMENTS.md](REQUIREMENTS.md)
-5. [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
-6. [docs/MIGRATION_PLAN.md](docs/MIGRATION_PLAN.md)
-7. [docs/TEST_PLAN.md](docs/TEST_PLAN.md)
-8. Actual code/tests, once source migration has been approved and performed.
+5. [docs/FINAL_PRODUCT_BLUEPRINT.md](docs/FINAL_PRODUCT_BLUEPRINT.md)
+6. [docs/ACCEPTANCE_MATRIX.md](docs/ACCEPTANCE_MATRIX.md)
+7. [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+8. [docs/MIGRATION_PLAN.md](docs/MIGRATION_PLAN.md)
+9. [docs/TEST_PLAN.md](docs/TEST_PLAN.md)
+10. Actual code/tests, once source migration has been approved and performed.
 
 ## Governance
 **No secret, credential, personal/customer data, private source, paid service, third-party transfer, branch history rewrite, production deployment, or security/visibility change without appropriate authorization.** Product completion is evidence-based, not estimated from docs. See [SECURITY.md](SECURITY.md) and [docs/ROADMAP.md](docs/ROADMAP.md).
