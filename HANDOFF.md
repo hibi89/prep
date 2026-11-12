@@ -1,6 +1,12 @@
 # PREP — TECHNICAL HANDOFF (10 mandatory sections)
 Updated: 2026-11-12 KST. Public-safe baseline only.
 
+## 2026-11-12 KST — VERIFIED PRIVACY UPDATE (current; supersedes prior PUBLIC status)
+- GitHub metadata confirms `hibi89/prep` is now **PRIVATE**; the owner made this change. Previous references in the historical record to "PUBLIC" or "blocked on visibility" describe conditions **before** this change.
+- Original private SMAX code is still **not migrated**; independent PREP source exists only in the temporary local ZIP. Main/develop/feature branches have documentation only. Windows/CI/consumer integration are NOT_RUN.
+- **PREP final-product completion: UNASSESSED.** GitHub independently verified code coverage: **0%**; local clean-room `npm test` 71/71 PASS (twice). **50% target not achieved**; do not invent percentage increases because privacy changed.
+- Next: audit original source SHA/rights/test dependency, preserve backup, selectively extract to the now-private `feature/core-extraction`, validate golden results and test committed exact SHA. No permission/visibility change or deployment initiated in this turn.
+
 ## 2026-11-12 KST latest implementation evidence (read before historical bootstrap)
 - New independent clean-room Node.js ESM candidate produced **locally only**, not copied from Private SMAX and **not committed** to PUBLIC GitHub. `PREP_STANDALONE_CORE_LOCAL_CANDIDATE_20261112.zip` archive SHA-256 `974dbad1f146a154d4f08033cd6e3d0e1f2b87b7966f3b4f7849070f477fdbe4`.
 - 71/71 PASS, FAIL0, SKIP0 on Linux Node22 original local code and **71/71 PASS again after fresh ZIP extraction**; CLI inspect/run REVIEW_REQUIRED exit2/verify SOURCE_BYTES_MATCH, syntax/pack dry-run/ZIP integrity passed.
